@@ -9,12 +9,12 @@ from telethon.tl import functions, types
 from ..utils import admin_cmd
 from . import BOTLOG, BOTLOG_CHATID, CMD_HELP
 
-global USER_AFK
+global USERAFK_ON
 global afk_time
 global last_afk_message
 global afk_start
 global afk_end
-USER_AFK = {}
+USERAFK_ON = {}
 afk_time = None
 last_afk_message = {}
 afk_start = {}
@@ -24,7 +24,7 @@ afk_start = {}
 async def set_not_afk(event):
     if event.chat_id in Config.UB_BLACK_LIST_CHAT:
         return
-    global USER_AFK
+    global USERAFK_ON
     global afk_time
     global last_afk_message
     global afk_start
@@ -34,7 +34,7 @@ async def set_not_afk(event):
     if afk_start != {}:
         total_afk_time = str((afk_end - afk_start))
     current_message = event.message.message
-    if "afk" not in current_message and "yes" in USER_AFK:
+    if "afk" not in current_message and "yes" in USERAFK_ON:
         shite = await borg.send_message(
             event.chat_id,
             "__Back alive!__\n**No Longer afk.**\n `Was afk for:``"
@@ -51,7 +51,7 @@ async def set_not_afk(event):
             )
         await asyncio.sleep(5)
         await shite.delete()
-        USER_AFK = {}
+        USERAFK_ON = {}
         afk_time = None
 
 
@@ -63,7 +63,7 @@ async def on_afk(event):
         return
     if event.chat_id in Config.UB_BLACK_LIST_CHAT:
         return
-    global USER_AFK
+    global USERAFK_ON
     global afk_time
     global last_afk_message
     global afk_start
@@ -77,7 +77,7 @@ async def on_afk(event):
         # userbot's should not reply to other userbot's
         # https://core.telegram.org/bots/faq#why-doesn-39t-my-bot-see-messages-from-other-bots
         return False
-    if USER_AFK and not (await event.get_sender()).bot:
+    if USERAFK_ON and not (await event.get_sender()).bot:
         msg = None
         message_to_reply = (
             f"__My Master Has Been In afk For__ `{total_afk_time}`\nWhere He Is: ONLY GOD KNOWS "
@@ -103,26 +103,26 @@ async def on_afk(event):
 async def _(event):
     if event.fwd_from:
         return
-    global USER_AFK
+    global USERAFK_ON
     global afk_time
     global last_afk_message
     global afk_start
     global afk_end
     global reason
-    USER_AFK = {}
+    USERAFK_ON = {}
     afk_time = None
     last_afk_message = {}
     afk_end = {}
     start_1 = datetime.now()
     afk_start = start_1.replace(microsecond=0)
     reason = event.pattern_match.group(1)
-    if not USER_AFK:
+    if not USERAFK_ON:
         last_seen_status = await borg(
             functions.account.GetPrivacyRequest(types.InputPrivacyKeyStatusTimestamp())
         )
         if isinstance(last_seen_status.rules, types.PrivacyValueAllowAll):
             afk_time = datetime.now()
-        USER_AFK = f"yes: {reason}"
+        USERAFK_ON = f"yes: {reason}"
         if reason:
             await borg.send_message(
                 event.chat_id, f"**I shall be Going afk!** __because ~ {reason}__"
