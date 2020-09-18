@@ -2,12 +2,12 @@
 Check https://t.me/tgbeta/3505"""
 import asyncio
 import logging
-import os
-import sys
+
 from telethon import events
+
+from ..utils import admin_cmd
 from . import CMD_HELP, LOGS
 from .afk import USERAFK_ON
-from ..utils import admin_cmd
 
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.WARN
@@ -90,6 +90,7 @@ async def set_no_log_p_m(event):
                 await event.edit("Won't Log Messages from this chat")
                 await asyncio.sleep(3)
 
+
 @borg.on(events.NewMessage(incoming=True, func=lambda e: e.mentioned))
 async def log_tagged_messages(event):
     if not USERAFK_ON and not (await event.get_sender()).bot:
@@ -101,6 +102,7 @@ async def log_tagged_messages(event):
                     Config.PM_LOGGR_BOT_API_ID,
                     f"#TAGS \nhttps://t.me/c/{hmm.id}/{event.message.id}",
                 )
+
 
 CMD_HELP.update(
     {
