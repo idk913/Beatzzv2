@@ -980,7 +980,7 @@ async def cancel_process(gdrive):
 async def google_drive(gdrive):
     reply = ""
     """ - Parsing all google drive function - """
-    
+
     value = gdrive.pattern_match.group(1)
     file_path = None
     uri = None
