@@ -11,7 +11,7 @@ import time
 import traceback
 from pathlib import Path
 from time import gmtime, strftime
-
+from .helpers.exceptions import CancelProcess
 from telethon import events
 from telethon.tl.functions.channels import GetParticipantRequest
 from telethon.tl.types import ChannelParticipantAdmin, ChannelParticipantCreator
@@ -334,10 +334,12 @@ def errors_handler(func):
     return wrapper
 
 
-async def progress(current, total, event, start, type_of_ps, file_name=None):
+async def progress(current, total, event, start, type_of_ps, file_name=None,is_cancelled=None):
     """Generic progress_callback for uploads and downloads."""
     now = time.time()
     diff = now - start
+    if is_cancelled is True:
+        raise CancelProcess
     if round(diff % 10.00) == 0 or current == total:
         percentage = current * 100 / total
         speed = current / diff
