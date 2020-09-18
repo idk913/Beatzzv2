@@ -56,12 +56,12 @@ async def aurl_download(event):
         LOGS.info(str(e))
         return await event.edit("Error :\n`{}`".format(str(e)))
     gid = download.gid
+    await check_progress_for_dl(gid=gid, event=event, previous=None)
     file = aria2.get_download(gid)
     if file.followed_by_ids:
         new_gid = await check_metadata(gid)
         await check_progress_for_dl(gid=new_gid, event=event, previous=None)
-    else:
-        await check_progress_for_dl(gid=gid, event=event, previous=None)
+        
 
 
 @bot.on(admin_cmd(pattern=r"magnet(?: |$)(.*)"))
@@ -196,14 +196,13 @@ async def check_progress_for_dl(gid, event, previous):
                     f"{prog_str}\n"
                     f"`{humanbytes(downloaded)} of {file.total_length_string()}"
                     f" @ {file.download_speed_string()}`\n"
-                    f"**ETA** -> {file.eta_string()}\n"
+                    f"**ETA** -> `{file.eta_string()}`\n"
                 )
                 if msg != previous:
                     await event.edit(msg)
                     msg = previous
             else:
                 await event.edit(f"`{msg}`")
-            await sleep(5)
             await check_progress_for_dl(gid, event, previous)
             file = aria2.get_download(gid)
             complete = file.is_complete
