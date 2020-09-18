@@ -1,4 +1,5 @@
-# ported from https://github.com/adekmaulana/ProjectBish/blob/master/userbot/modules/aria.py
+# ported from ProjectBish by @sandy1709
+#credits to ProjectBish
 # Copyright (C) 2019 The Raphielscape Company LLC.
 #
 # Licensed under the Raphielscape Public License, Version 1.c (the "License");
