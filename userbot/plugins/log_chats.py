@@ -95,7 +95,7 @@ async def set_no_log_p_m(event):
 async def log_tagged_messages(event):
     if "on" in USERAFK_ON:
         return
-    if not await event.get_sender()).bot:
+    if not (await event.get_sender()).bot:
         hmm = await event.get_chat()
         if Config.PM_LOGGR_BOT_API_ID:
             await asyncio.sleep(5)
