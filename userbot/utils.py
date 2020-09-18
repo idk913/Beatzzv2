@@ -375,6 +375,18 @@ def humanbytes(size):
         raised_to_pow += 1
     return str(round(size, 2)) + " " + dict_power_n[raised_to_pow] + "B"
 
+def human_to_bytes(size: str) -> int:
+    units = {
+        "M": 2**20, "MB": 2**20,
+        "G": 2**30, "GB": 2**30,
+        "T": 2**40, "TB": 2**40
+    }
+
+    size = size.upper()
+    if not re.match(r' ', size):
+        size = re.sub(r'([KMGT])', r' \1', size)
+    number, unit = [string.strip() for string in size.split()]
+    return int(float(number)*units[unit])
 
 def time_formatter(milliseconds: int) -> str:
     """Inputs time in milliseconds, to get beautified time,
