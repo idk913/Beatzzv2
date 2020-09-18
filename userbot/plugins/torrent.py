@@ -47,7 +47,7 @@ download_path = os.getcwd() + TMP_DOWNLOAD_DIRECTORY.strip(".")
 aria2.set_global_options({"dir": download_path})
 
 
-@borg.on(admin_cmd(pattern=r"fromurl(?: |$)(.*)"))
+@bot.on(admin_cmd(pattern=r"fromurl(?: |$)(.*)"))
 async def aurl_download(event):
     uri = [event.pattern_match.group(1)]
     try:  # Add URL Into Queue
@@ -63,7 +63,7 @@ async def aurl_download(event):
         await check_progress_for_dl(gid=new_gid, event=event, previous=None)
 
 
-@borg.on(admin_cmd(pattern=r"magnet(?: |$)(.*)"))
+@bot.on(admin_cmd(pattern=r"magnet(?: |$)(.*)"))
 async def magnet_download(event):
     magnet_uri = event.pattern_match.group(1)
     # Add Magnet URI Into Queue
@@ -79,7 +79,7 @@ async def magnet_download(event):
     await check_progress_for_dl(gid=new_gid, event=event, previous=None)
 
 
-@borg.on(admin_cmd(pattern=r"tor(?: |$)(.*)"))
+@bot.on(admin_cmd(pattern=r"tor(?: |$)(.*)"))
 async def torrent_download(event):
     torrent_file_path = event.pattern_match.group(1)
     # Add Torrent Into Queue
@@ -93,7 +93,7 @@ async def torrent_download(event):
     await check_progress_for_dl(gid=gid, event=event, previous=None)
 
 
-@borg.on(admin_cmd(pattern=r"aclear$"))
+@bot.on(admin_cmd(pattern=r"aclear$"))
 async def remove_all(event):
     try:
         removed = aria2.remove_all(force=True)
@@ -108,7 +108,7 @@ async def remove_all(event):
     await sleep(2.5)
 
 
-@borg.on(admin_cmd(pattern="apause$"))
+@bot.on(admin_cmd(pattern="apause$"))
 async def pause_all(event):
     # Pause ALL Currently Running Downloads.
     await event.edit("`Pausing downloads...`")
@@ -118,7 +118,7 @@ async def pause_all(event):
     await sleep(2.5)
 
 
-@borg.on(admin_cmd(pattern="aresume$"))
+@bot.on(admin_cmd(pattern="aresume$"))
 async def resume_all(event):
     await event.edit("`Resuming downloads...`")
     aria2.resume_all()
@@ -128,7 +128,7 @@ async def resume_all(event):
     await event.delete()
 
 
-@borg.on(admin_cmd(pattern=r"ashow$"))
+@bot.on(admin_cmd(pattern=r"ashow$"))
 async def show_all(event):
     output = "output.txt"
     downloads = aria2.get_downloads()
