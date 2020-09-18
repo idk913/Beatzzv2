@@ -440,10 +440,10 @@ async def download_gdrive(gdrive, service, uri):
                     speed = round(downloaded / diff, 2)
                     eta = round((file_size - downloaded) / speed)
                     prog_str = "**Downloading : **`[{0}{1}] {2}`".format(
-                                "".join(["▰" for i in range(math.floor(percentage / 10))]),
-                                "".join(["▱" for i in range(10 - math.floor(percentage / 10))]),
-                                round(percentage, 2),
-                            )
+                        "".join(["▰" for i in range(math.floor(percentage / 10))]),
+                        "".join(["▱" for i in range(10 - math.floor(percentage / 10))]),
+                        round(percentage, 2),
+                    )
                     current_message = (
                         "`[FILE - DOWNLOAD]`\n\n"
                         f"**Name : **`{file_name}`\n"
@@ -487,10 +487,10 @@ async def download_gdrive(gdrive, service, uri):
                     speed = round(downloaded / diff, 2)
                     eta = round((file_size - downloaded) / speed)
                     prog_str = "**Downloading : **`[{0}{1}] {2}`".format(
-                                "".join(["▰" for i in range(math.floor(percentage / 10))]),
-                                "".join(["▱" for i in range(10 - math.floor(percentage / 10))]),
-                                round(percentage, 2),
-                            )
+                        "".join(["▰" for i in range(math.floor(percentage / 10))]),
+                        "".join(["▱" for i in range(10 - math.floor(percentage / 10))]),
+                        round(percentage, 2),
+                    )
                     current_message = (
                         "`[FILE - DOWNLOAD]`\n\n"
                         f"**Name : **`{file_name}`\n"
@@ -653,10 +653,10 @@ async def upload(gdrive, service, file_path, file_name, mimeType):
             speed = round(uploaded / diff, 2)
             eta = round((file_size - uploaded) / speed)
             prog_str = "**Uploading : **`[{0}{1}] {2}`".format(
-                        "".join(["▰" for i in range(math.floor(percentage / 10))]),
-                        "".join(["▱" for i in range(10 - math.floor(percentage / 10))]),
-                        round(percentage, 2),
-                    )
+                "".join(["▰" for i in range(math.floor(percentage / 10))]),
+                "".join(["▱" for i in range(10 - math.floor(percentage / 10))]),
+                round(percentage, 2),
+            )
             current_message = (
                 "`[FILE - UPLOAD]`\n\n"
                 f"**Name : **`{file_name}`\n"
@@ -687,7 +687,7 @@ async def task_directory(gdrive, service, folder_path):
     lists = os.listdir(folder_path)
     if len(lists) == 0:
         return parent_Id
-    root_parent_Id = None 
+    root_parent_Id = None
     for f in lists:
         if is_cancelled is True:
             raise CancelProcess
@@ -1297,6 +1297,7 @@ async def check_progress_for_dl(event, gid, previous):
                         file.name
                     )
                 )
+
 
 CMD_HELP.update(
     {
