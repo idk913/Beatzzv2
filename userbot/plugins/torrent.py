@@ -61,7 +61,6 @@ async def aurl_download(event):
     if file.followed_by_ids:
         new_gid = await check_metadata(gid)
         await check_progress_for_dl(gid=new_gid, event=event, previous=None)
-        
 
 
 @bot.on(admin_cmd(pattern=r"magnet(?: |$)(.*)"))
