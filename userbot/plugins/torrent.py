@@ -191,7 +191,7 @@ async def check_progress_for_dl(gid, event, previous):
                 )
                 msg = (
                     f"**Name : **`{file.name}`\n"
-                    f"**Status : **`{file.status.capitalize()}\n"
+                    f"**Status : **`{file.status.capitalize()}`\n"
                     f"{prog_str}\n"
                     f"`{humanbytes(downloaded)} of {file.total_length_string()}"
                     f" @ {file.download_speed_string()}`\n"
