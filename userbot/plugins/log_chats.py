@@ -93,7 +93,9 @@ async def set_no_log_p_m(event):
 
 @borg.on(events.NewMessage(incoming=True, func=lambda e: e.mentioned))
 async def log_tagged_messages(event):
-    if not (USERAFK_ON and (await event.get_sender()).bot):
+    if "on" in USERAFK_ON:
+        return
+    if not await event.get_sender()).bot:
         hmm = await event.get_chat()
         if Config.PM_LOGGR_BOT_API_ID:
             await asyncio.sleep(5)
