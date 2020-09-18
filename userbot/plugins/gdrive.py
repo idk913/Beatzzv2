@@ -980,11 +980,12 @@ async def cancel_process(gdrive):
 async def google_drive(gdrive):
     reply = ""
     """ - Parsing all google drive function - """
+    
     value = gdrive.pattern_match.group(1)
     file_path = None
     uri = None
     if not value and not gdrive.reply_to_msg_id:
-        return None
+        return await gdrive.edit("What should i Do ")
     elif value and gdrive.reply_to_msg_id:
         await gdrive.edit(
             "`[UNKNOWN - ERROR]`\n\n"
