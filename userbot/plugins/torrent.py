@@ -199,6 +199,9 @@ async def check_progress_for_dl(gid, event, previous):
                 if msg != previous:
                     await event.edit(msg)
                     msg = previous
+
+                await sleep(3)
+                await check_progress_for_dl(gid, event, previous)
             else:
                 await event.edit("Error : `{}`".format(str(file.error_message)))
                 return
@@ -209,8 +212,6 @@ async def check_progress_for_dl(gid, event, previous):
                 f"**Path : **`{TMP_DOWNLOAD_DIRECTORY + file.name}`\n"
                 "**Resp : **`OK - Successfully downloaded...`"
             )
-        await sleep(3)
-        await check_progress_for_dl(gid, event, previous)
     except Exception as e:
         if " not found" in str(e) or "'file'" in str(e):
             await event.edit("Download Canceled :\n`{}`".format(file.name))
