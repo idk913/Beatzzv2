@@ -6,8 +6,8 @@ from datetime import datetime
 from telethon import events
 from telethon.tl import functions, types
 
-from . import CMD_HELP,BOTLOG_CHATID , BOTLOG
 from ..utils import admin_cmd
+from . import BOTLOG, BOTLOG_CHATID, CMD_HELP
 
 global USER_AFK
 global afk_time
@@ -43,7 +43,7 @@ async def set_not_afk(event):
         )
         if BOTLOG:
             await borg.send_message(
-                BOTLOG_CHATID ,
+                BOTLOG_CHATID,
                 "#AFKFALSE \nSet AFK mode to False\n"
                 + "__Back alive!__\n**No Longer afk.**\n `Was afk for:``"
                 + total_afk_time
@@ -126,7 +126,7 @@ async def _(event):
         await event.delete()
         if BOTLOG:
             await borg.send_message(
-                BOTLOG_CHATID ,
+                BOTLOG_CHATID,
                 f"#AFKTRUE \nSet AFK mode to True, and Reason is {reason}",
             )
 
