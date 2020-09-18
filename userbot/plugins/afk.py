@@ -93,7 +93,7 @@ async def on_afk(event):
         if Config.PM_LOGGR_BOT_API_ID:
             await bot.send_message(
                 Config.PM_LOGGR_BOT_API_ID,
-                f"#AFK_TAGS \nhttps://t.me/{event.chat_id[1:}/{event.message.id}",
+                f"#AFK_TAGS \nhttps://t.me/{event.chat_id[1:]}/{event.message.id}",
             )
 
 
