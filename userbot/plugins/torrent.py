@@ -183,11 +183,11 @@ async def check_progress_for_dl(gid, event, previous):
         await sleep(3)
         if complete:
             return await event.edit(
-                    f"**Name : **`{file.name}`\n"
-                    f"**Size : **`{file.total_length_string()}`\n"
-                    f"**Path : **`{TMP_DOWNLOAD_DIRECTORY + file.name}`\n"
-                    "**Resp : **`OK - Successfully downloaded...`"
-                )
+                f"**Name : **`{file.name}`\n"
+                f"**Size : **`{file.total_length_string()}`\n"
+                f"**Path : **`{TMP_DOWNLOAD_DIRECTORY + file.name}`\n"
+                "**Resp : **`OK - Successfully downloaded...`"
+            )
         try:
             if not complete and not file.error_message:
                 percentage = int(file.progress)
