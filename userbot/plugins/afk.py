@@ -86,14 +86,14 @@ async def on_afk(event):
             else f"**Heya!**\n__I am currently unavailable. Since when, you ask? For {total_afk_time} I guess.__\n\nWhen will I be back? Soon __Whenever I feel like it__**( ಠ ʖ̯ ಠ)**  "
         )
         msg = await event.reply(message_to_reply)
-        await asyncio.sleep(5)
         if event.chat_id in last_afk_message:
             await last_afk_message[event.chat_id].delete()
         last_afk_message[event.chat_id] = msg
+        await asyncio.sleep(5)
         if Config.PM_LOGGR_BOT_API_ID:
             await bot.send_message(
                 Config.PM_LOGGR_BOT_API_ID,
-                f"#AFK_TAGS \nhttps://t.me/{event.chat_id}/{event.message.id}",
+                f"#AFK_TAGS \n{event}",
             )
 
 
