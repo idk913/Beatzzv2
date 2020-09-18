@@ -1,21 +1,23 @@
-#ported from https://github.com/adekmaulana/ProjectBish/blob/master/userbot/modules/aria.py
+# ported from https://github.com/adekmaulana/ProjectBish/blob/master/userbot/modules/aria.py
 # Copyright (C) 2019 The Raphielscape Company LLC.
 #
 # Licensed under the Raphielscape Public License, Version 1.c (the "License");
 # you may not use this file except in compliance with the License.
 
-import aria2p
-from . import TMP_DOWNLOAD_DIRECTORY ,LOGS, CMD_HELP,
-from ..utils import admin_cmd, humanbytes
-import os
 import math
+import os
 from asyncio import sleep
 from subprocess import PIPE, Popen
+
+import aria2p
 from requests import get
 
+from ..utils import admin_cmd, humanbytes
+from . import CMD_HELP, LOGS, TMP_DOWNLOAD_DIRECTORY
+
+
 def subprocess_run(cmd):
-    subproc = Popen(cmd, stdout=PIPE, stderr=PIPE,
-                    shell=True, universal_newlines=True)
+    subproc = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True, universal_newlines=True)
     talk = subproc.communicate()
     exitCode = subproc.returncode
     if exitCode != 0:
@@ -25,8 +27,8 @@ def subprocess_run(cmd):
 
 # Get best trackers for improved download speeds, thanks K-E-N-W-A-Y.
 trackers_list = get(
-    'https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_best.txt'
-).text.replace('\n\n', ',')
+    "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_best.txt"
+).text.replace("\n\n", ",")
 trackers = f"[{trackers_list}]"
 
 cmd = f"aria2c --enable-rpc --rpc-listen-all=false --rpc-listen-port 6800 --max-connection-per-server=10 --rpc-max-request-size=1024M --seed-time=0.01 --max-upload-limit=5K --max-concurrent-downloads=5 --min-split-size=10M --follow-torrent=mem --split=10 --bt-tracker={trackers} --daemon=true --allow-overwrite=true"
@@ -39,9 +41,10 @@ subprocess_run(cmd)
 if not os.path.isdir(TMP_DOWNLOAD_DIRECTORY):
     os.makedirs(TMP_DOWNLOAD_DIRECTORY)
 
-download_path = os.getcwd() + TMP_DOWNLOAD_DIRECTORY.strip('.')
+download_path = os.getcwd() + TMP_DOWNLOAD_DIRECTORY.strip(".")
 
-aria2.set_global_options({'dir': download_path})
+aria2.set_global_options({"dir": download_path})
+
 
 @borg.on(admin_cmd(pattern=r"fromurl(?: |$)(.*)"))
 async def aurl_download(event):
@@ -80,10 +83,9 @@ async def torrent_download(event):
     torrent_file_path = event.pattern_match.group(1)
     # Add Torrent Into Queue
     try:
-        download = aria2.add_torrent(torrent_file_path,
-                                     uris=None,
-                                     options=None,
-                                     position=None)
+        download = aria2.add_torrent(
+            torrent_file_path, uris=None, options=None, position=None
+        )
     except Exception as e:
         return await event.edit(str(e))
     gid = download.gid
@@ -131,19 +133,29 @@ async def show_all(event):
     downloads = aria2.get_downloads()
     msg = ""
     for download in downloads:
-        msg = msg + "File: `" + str(download.name) + "`\nSpeed: " + str(
-            download.download_speed_string()) + "\nProgress: " + str(
-                download.progress_string()) + "\nTotal Size: " + str(
-                    download.total_length_string()) + "\nStatus: " + str(
-                        download.status) + "\nETA:  " + str(
-                            download.eta_string()) + "\n\n"
+        msg = (
+            msg
+            + "File: `"
+            + str(download.name)
+            + "`\nSpeed: "
+            + str(download.download_speed_string())
+            + "\nProgress: "
+            + str(download.progress_string())
+            + "\nTotal Size: "
+            + str(download.total_length_string())
+            + "\nStatus: "
+            + str(download.status)
+            + "\nETA:  "
+            + str(download.eta_string())
+            + "\n\n"
+        )
     if len(msg) <= 4096:
         await event.edit("`On-going Downloads: `\n" + msg)
         await sleep(5)
         await event.delete()
     else:
         await event.edit("`Output is too big, sending it as a file...`")
-        with open(output, 'w') as f:
+        with open(output, "w") as f:
             f.write(msg)
         await sleep(2)
         await event.delete()
@@ -155,6 +167,7 @@ async def show_all(event):
             allow_cache=False,
             reply_to=event.message.id,
         )
+
 
 async def check_metadata(gid):
     file = aria2.get_download(gid)
@@ -173,11 +186,10 @@ async def check_progress_for_dl(gid, event, previous):
                 percentage = int(file.progress)
                 downloaded = percentage * int(file.total_length) / 100
                 prog_str = "`Downloading` | [{0}{1}] `{2}`".format(
-                    "".join(["●" for i in range(
-                            math.floor(percentage / 10))]),
-                    "".join(["○" for i in range(
-                            10 - math.floor(percentage / 10))]),
-                    file.progress_string())
+                    "".join(["●" for i in range(math.floor(percentage / 10))]),
+                    "".join(["○" for i in range(10 - math.floor(percentage / 10))]),
+                    file.progress_string(),
+                )
                 msg = (
                     f"`Name`: `{file.name}`\n"
                     f"`Status` -> **{file.status.capitalize()}**\n"
@@ -210,17 +222,22 @@ async def check_progress_for_dl(gid, event, previous):
             elif " depth exceeded" in str(e):
                 file.remove(force=True)
                 await event.edit(
-                    "Download Auto Canceled :\n`{}`\nYour Torrent/Link is Dead."
-                    .format(file.name))
-		
-CMD_HELP.update({
-    "torrent":"**Plugin : **`torrent`"
-    "\n\n**Syntax : **`.fromurl [URL]` (or) >`.magnet [Magnet Link]` (or) >`.tor [path to torrent file]`"
-    "\n**Usage :** Downloads the file into your userbot server storage."
-    "\n\n**Syntax : **`.apause (or) .aresume`"
-    "\n**Usage : **Pauses/resumes on-going downloads."
-    "\n\n**Syntax :**`.aclear`"
-    "\n**Usage : **Clears the download queue, deleting all on-going downloads."
-    "\n\n**Syntax : **`.ashow`"
-    "\n**Usage : **Shows progress of the on-going downloads."
-})		
+                    "Download Auto Canceled :\n`{}`\nYour Torrent/Link is Dead.".format(
+                        file.name
+                    )
+                )
+
+
+CMD_HELP.update(
+    {
+        "torrent": "**Plugin : **`torrent`"
+        "\n\n**Syntax : **`.fromurl [URL]` (or) >`.magnet [Magnet Link]` (or) >`.tor [path to torrent file]`"
+        "\n**Usage :** Downloads the file into your userbot server storage."
+        "\n\n**Syntax : **`.apause (or) .aresume`"
+        "\n**Usage : **Pauses/resumes on-going downloads."
+        "\n\n**Syntax :**`.aclear`"
+        "\n**Usage : **Clears the download queue, deleting all on-going downloads."
+        "\n\n**Syntax : **`.ashow`"
+        "\n**Usage : **Shows progress of the on-going downloads."
+    }
+)
