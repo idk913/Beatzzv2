@@ -91,10 +91,10 @@ async def on_afk(event):
         last_afk_message[event.chat_id] = msg
         await asyncio.sleep(5)
         if Config.PM_LOGGR_BOT_API_ID:
-                await bot.send_message(
-                    Config.PM_LOGGR_BOT_API_ID,
-                    f"#AFK_TAGS \nhttps://t.me/c/{event.chat_id}/{event.message.id}",
-                )
+            await bot.send_message(
+                Config.PM_LOGGR_BOT_API_ID,
+                f"#AFK_TAGS \nhttps://t.me/c/{event.chat_id}/{event.message.id}",
+            )
 
 
 @borg.on(admin_cmd(pattern=r"afk ?(.*)", outgoing=True))
