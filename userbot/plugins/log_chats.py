@@ -7,7 +7,6 @@ from telethon import events
 
 from ..utils import admin_cmd
 from . import CMD_HELP, LOGS
-from .afk import USERAFK_ON
 
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.WARN
@@ -93,6 +92,7 @@ async def set_no_log_p_m(event):
 
 @borg.on(events.NewMessage(incoming=True, func=lambda e: e.mentioned))
 async def log_tagged_messages(event):
+    from .afk import USERAFK_ON
     if "on" in USERAFK_ON:
         return
     if not (await event.get_sender()).bot:
