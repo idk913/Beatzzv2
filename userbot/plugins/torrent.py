@@ -56,11 +56,12 @@ async def aurl_download(event):
         LOGS.info(str(e))
         return await event.edit("Error :\n`{}`".format(str(e)))
     gid = download.gid
-    await check_progress_for_dl(gid=gid, event=event, previous=None)
     file = aria2.get_download(gid)
     if file.followed_by_ids:
         new_gid = await check_metadata(gid)
         await check_progress_for_dl(gid=new_gid, event=event, previous=None)
+    else:
+        await check_progress_for_dl(gid=gid, event=event, previous=None)
 
 
 @bot.on(admin_cmd(pattern=r"magnet(?: |$)(.*)"))
