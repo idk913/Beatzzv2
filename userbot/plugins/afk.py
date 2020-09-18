@@ -92,10 +92,11 @@ async def on_afk(event):
         await asyncio.sleep(5)
         hmm = await event.get_chat()
         if Config.PM_LOGGR_BOT_API_ID:
-            await bot.send_message(
-                Config.PM_LOGGR_BOT_API_ID,
-                f"#AFK_TAGS \nhttps://t.me/c/{hmm.id}/{event.message.id}",
-            )
+            if not event.is_private:
+                await bot.send_message(
+                    Config.PM_LOGGR_BOT_API_ID,
+                    f"#AFK_TAGS \nhttps://t.me/c/{hmm.id}/{event.message.id}",
+                )
 
 
 @borg.on(admin_cmd(pattern=r"afk ?(.*)", outgoing=True))
