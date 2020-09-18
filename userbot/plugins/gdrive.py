@@ -439,18 +439,18 @@ async def download_gdrive(gdrive, service, uri):
                     percentage = downloaded / file_size * 100
                     speed = round(downloaded / diff, 2)
                     eta = round((file_size - downloaded) / speed)
-                    prog_str = "`Downloading` | [{0}{1}] `{2}%`".format(
-                        "".join(["●" for i in range(math.floor(percentage / 10))]),
-                        "".join(["○" for i in range(10 - math.floor(percentage / 10))]),
-                        round(percentage, 2),
-                    )
+                    prog_str = "**Downloading : **`[{0}{1}] {2}`".format(
+                                "".join(["▰" for i in range(math.floor(percentage / 10))]),
+                                "".join(["▱" for i in range(10 - math.floor(percentage / 10))]),
+                                round(percentage, 2),
+                            )
                     current_message = (
                         "`[FILE - DOWNLOAD]`\n\n"
-                        f"`{file_name}`\n"
-                        f"`Status`\n{prog_str}\n"
-                        f"`{humanbytes(downloaded)} of {humanbytes(file_size)}"
-                        f" @ {humanbytes(speed)}`\n"
-                        f"`ETA` -> {time_formatter(eta)}"
+                        f"**Name : **`{file_name}`\n"
+                        f"**Status : **\n`{prog_str}`\n"
+                        f"`{humanbytes(downloaded)} of {humanbytes(file_size)} "
+                        f"@ {humanbytes(speed)}`\n"
+                        f"**ETA** -> `{time_formatter(eta)}`"
                     )
                     if (
                         round(diff % 15.00) == 0
@@ -486,18 +486,18 @@ async def download_gdrive(gdrive, service, uri):
                     percentage = downloaded / file_size * 100
                     speed = round(downloaded / diff, 2)
                     eta = round((file_size - downloaded) / speed)
-                    prog_str = "`Downloading` | [{0}{1}] `{2}%`".format(
-                        "".join(["●" for i in range(math.floor(percentage / 10))]),
-                        "".join(["○" for i in range(10 - math.floor(percentage / 10))]),
-                        round(percentage, 2),
-                    )
+                    prog_str = "**Downloading : **`[{0}{1}] {2}`".format(
+                                "".join(["▰" for i in range(math.floor(percentage / 10))]),
+                                "".join(["▱" for i in range(10 - math.floor(percentage / 10))]),
+                                round(percentage, 2),
+                            )
                     current_message = (
                         "`[FILE - DOWNLOAD]`\n\n"
-                        f"`{file_name}`\n"
-                        f"`Status`\n{prog_str}\n"
-                        f"`{humanbytes(downloaded)} of {humanbytes(file_size)}"
-                        f" @ {humanbytes(speed)}`\n"
-                        f"`ETA` -> {time_formatter(eta)}"
+                        f"**Name : **`{file_name}`\n"
+                        f"**Status : **\n`{prog_str}`\n"
+                        f"`{humanbytes(downloaded)} of {humanbytes(file_size)} "
+                        f"@ {humanbytes(speed)}`\n"
+                        f"**ETA** -> `{time_formatter(eta)}`"
                     )
                     if (
                         round(diff % 15.00) == 0
@@ -652,18 +652,18 @@ async def upload(gdrive, service, file_path, file_name, mimeType):
             percentage = uploaded / file_size * 100
             speed = round(uploaded / diff, 2)
             eta = round((file_size - uploaded) / speed)
-            prog_str = "`Uploading` | [{0}{1}] `{2}%`".format(
-                "".join(["●" for i in range(math.floor(percentage / 10))]),
-                "".join(["○" for i in range(10 - math.floor(percentage / 10))]),
-                round(percentage, 2),
-            )
+            prog_str = "**Uploading : **`[{0}{1}] {2}`".format(
+                        "".join(["▰" for i in range(math.floor(percentage / 10))]),
+                        "".join(["▱" for i in range(10 - math.floor(percentage / 10))]),
+                        round(percentage, 2),
+                    )
             current_message = (
                 "`[FILE - UPLOAD]`\n\n"
-                f"`{file_name}`\n"
-                f"`Status`\n{prog_str}\n"
+                f"**Name : **`{file_name}`\n"
+                f"**Status : **\n`{prog_str}`\n"
                 f"`{humanbytes(uploaded)} of {humanbytes(file_size)} "
                 f"@ {humanbytes(speed)}`\n"
-                f"`ETA` -> {time_formatter(eta)}"
+                f"**ETA** -> `{time_formatter(eta)}`"
             )
             if (
                 round(diff % 15.00) == 0
@@ -687,7 +687,7 @@ async def task_directory(gdrive, service, folder_path):
     lists = os.listdir(folder_path)
     if len(lists) == 0:
         return parent_Id
-    root_parent_Id = None
+    root_parent_Id = None 
     for f in lists:
         if is_cancelled is True:
             raise CancelProcess
@@ -1241,65 +1241,62 @@ async def set_upload_folder(gdrive):
     return
 
 
-async def check_progress_for_dl(gdrive, gid, previous):
+async def check_progress_for_dl(event, gid, previous):
     complete = None
     global is_cancelled
     global filenames
     is_cancelled = False
     while not complete:
-        if is_cancelled is True:
-            raise CancelProcess
-
         file = aria2.get_download(gid)
         complete = file.is_complete
+        if is_cancelled is True:
+            raise CancelProcess
         try:
-            filenames = file.name
-        except IndexError:
-            pass
-        try:
-            if not complete and not file.error_message:
-                percentage = int(file.progress)
-                downloaded = percentage * int(file.total_length) / 100
-                prog_str = "`Downloading` | [{0}{1}] `{2}`".format(
-                    "".join(["●" for i in range(math.floor(percentage / 10))]),
-                    "".join(["○" for i in range(10 - math.floor(percentage / 10))]),
-                    file.progress_string(),
-                )
-                msg = (
-                    "`[URI - DOWNLOAD]`\n\n"
-                    f"`{file.name}`\n"
-                    f"`Status` -> **{file.status.capitalize()}**\n"
-                    f"{prog_str}\n"
-                    f"`{humanbytes(downloaded)} of"
-                    f" {file.total_length_string()}"
-                    f" @ {file.download_speed_string()}`\n"
-                    f"`ETA` -> {file.eta_string()}\n"
-                )
-                if msg != previous or downloaded == file.total_length_string():
-                    await gdrive.edit(msg)
-                    msg = previous
-            else:
-                await gdrive.edit(f"`{msg}`")
-            await asyncio.sleep(15)
-            await check_progress_for_dl(gdrive, gid, previous)
-            file = aria2.get_download(gid)
-            complete = file.is_complete
-            if complete:
-                await gdrive.edit(f"`{file.name}`\n\n" "Successfully downloaded...")
-                return True
-        except Exception as e:
-            if " depth exceeded" in str(e):
-                file.remove(force=True)
-                try:
-                    await gdrive.edit(
-                        "`[URI - DOWNLOAD]`\n\n"
-                        f"`{file.name}`\n"
-                        "`Status` : **failed**\n"
-                        "`Reason` : Auto cancelled download, URI/Torrent dead."
+            if not complete:
+                if not file.error_message:
+                    percentage = int(file.progress)
+                    downloaded = percentage * int(file.total_length) / 100
+                    prog_str = "**Downloading : **`[{0}{1}] {2}`".format(
+                        "".join(["▰" for i in range(math.floor(percentage / 10))]),
+                        "".join(["▱" for i in range(10 - math.floor(percentage / 10))]),
+                        file.progress_string(),
                     )
-                except Exception:
-                    pass
+                    msg = (
+                        f"**Name : **`{file.name}`\n"
+                        f"**Status : **`{file.status.capitalize()}`\n"
+                        f"{prog_str}\n"
+                        f"`{humanbytes(downloaded)} of {file.total_length_string()}"
+                        f" @ {file.download_speed_string()}`\n"
+                        f"**ETA** -> `{file.eta_string()}`\n"
+                    )
+                    if msg != previous:
+                        await event.edit(msg)
+                        msg = previous
 
+                    await sleep(3)
+                    await check_progress_for_dl(gid, event, previous)
+                else:
+                    await event.edit("Error : `{}`".format(str(file.error_message)))
+                    return
+            else:
+                return await event.edit(
+                    f"**Name : **`{file.name}`\n"
+                    f"**Size : **`{file.total_length_string()}`\n"
+                    f"**Path : **`{TMP_DOWNLOAD_DIRECTORY + file.name}`\n"
+                    "**Resp : **`OK - Successfully downloaded...`"
+                )
+        except Exception as e:
+            if " not found" in str(e) or "'file'" in str(e):
+                await event.edit("Download Canceled :\n`{}`".format(file.name))
+                await sleep(2.5)
+                return await event.delete()
+            elif " depth exceeded" in str(e):
+                file.remove(force=True)
+                await event.edit(
+                    "Download Auto Canceled :\n`{}`\nYour Torrent/Link is Dead.".format(
+                        file.name
+                    )
+                )
 
 CMD_HELP.update(
     {
