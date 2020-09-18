@@ -28,7 +28,7 @@ import re
 import requests
 import logging
 
-import .sql_helper.google_drive_sql as helper
+from .sql_helper import google_drive_sql as helper
 
 from bs4 import BeautifulSoup
 from os.path import isfile, isdir, join, getctime
