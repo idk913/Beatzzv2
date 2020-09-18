@@ -188,27 +188,36 @@ async def check_progress_for_dl(gid, event, previous):
                 "**Resp : **`OK - Successfully downloaded...`"
             )
         try:
-            if not complete and not file.error_message:
-                percentage = int(file.progress)
-                downloaded = percentage * int(file.total_length) / 100
-                prog_str = "**Downloading : **`[{0}{1}] {2}`".format(
-                    "".join(["▰" for i in range(math.floor(percentage / 10))]),
-                    "".join(["▱" for i in range(10 - math.floor(percentage / 10))]),
-                    file.progress_string(),
-                )
-                msg = (
-                    f"**Name : **`{file.name}`\n"
-                    f"**Status : **`{file.status.capitalize()}`\n"
-                    f"{prog_str}\n"
-                    f"`{humanbytes(downloaded)} of {file.total_length_string()}"
-                    f" @ {file.download_speed_string()}`\n"
-                    f"**ETA** -> `{file.eta_string()}`\n"
-                )
-                if msg != previous:
-                    await event.edit(msg)
-                    msg = previous
+            if not complete:
+                if not file.error_message:
+                    percentage = int(file.progress)
+                    downloaded = percentage * int(file.total_length) / 100
+                    prog_str = "**Downloading : **`[{0}{1}] {2}`".format(
+                        "".join(["▰" for i in range(math.floor(percentage / 10))]),
+                        "".join(["▱" for i in range(10 - math.floor(percentage / 10))]),
+                        file.progress_string(),
+                    )
+                    msg = (
+                        f"**Name : **`{file.name}`\n"
+                        f"**Status : **`{file.status.capitalize()}`\n"
+                        f"{prog_str}\n"
+                        f"`{humanbytes(downloaded)} of {file.total_length_string()}"
+                        f" @ {file.download_speed_string()}`\n"
+                        f"**ETA** -> `{file.eta_string()}`\n"
+                    )
+                    if msg != previous:
+                        await event.edit(msg)
+                        msg = previous
+                else:
+                    await event.edit("Error : `{}`".format(str(file.error_message)))
+                    return
             else:
-                await event.edit(f"`{msg}`")
+                return await event.edit(
+                    f"**Name : **`{file.name}`\n"
+                    f"**Size : **`{file.total_length_string()}`\n"
+                    f"**Path : **`{TMP_DOWNLOAD_DIRECTORY + file.name}`\n"
+                    "**Resp : **`OK - Successfully downloaded...`"
+                )
             await sleep(3)
             await check_progress_for_dl(gid, event, previous)
         except Exception as e:
