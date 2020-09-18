@@ -61,8 +61,6 @@ async def set_not_afk(event):
 async def on_afk(event):
     if event.fwd_from:
         return
-    if event.chat_id in Config.UB_BLACK_LIST_CHAT:
-        return
     global USERAFK_ON
     global afk_time
     global last_afk_message
@@ -85,7 +83,8 @@ async def on_afk(event):
             if reason
             else f"**Heya!**\n__I am currently unavailable. Since when, you ask? For {total_afk_time} I guess.__\n\nWhen will I be back? Soon __Whenever I feel like it__**( ಠ ʖ̯ ಠ)**  "
         )
-        msg = await event.reply(message_to_reply)
+        if not (event.chat_id in Config.UB_BLACK_LIST_CHAT):
+            msg = await event.reply(message_to_reply)
         if event.chat_id in last_afk_message:
             await last_afk_message[event.chat_id].delete()
         last_afk_message[event.chat_id] = msg
