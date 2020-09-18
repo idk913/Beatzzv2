@@ -5,12 +5,10 @@ import logging
 import os
 import sys
 from asyncio import sleep
-
 from telethon import events
-
-from userbot import CMD_HELP
-from userbot.uniborgConfig import Config
-from userbot.utils import admin_cmd
+from . import CMD_HELP
+from .afk import USERAFK_ON
+from ..utils import admin_cmd
 
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.WARN
@@ -98,6 +96,17 @@ async def set_no_log_p_m(event):
                 await event.edit("Won't Log Messages from this chat")
                 await asyncio.sleep(3)
 
+@borg.on(events.NewMessage(incoming=True, func=lambda e: e.mentioned))
+async def log_tagged_messages(event):
+    if not USERAFK_ON and not (await event.get_sender()).bot:
+        hmm = await event.get_chat()
+        if Config.PM_LOGGR_BOT_API_ID:
+            await asyncio.sleep(5)
+            if not event.is_private:
+                await bot.send_message(
+                    Config.PM_LOGGR_BOT_API_ID,
+                    f"#TAGS \nhttps://t.me/c/{hmm.id}/{event.message.id}",
+                )
 
 CMD_HELP.update(
     {
