@@ -90,6 +90,8 @@ async def on_afk(event):
         if event.chat_id in last_afk_message:
             await last_afk_message[event.chat_id].delete()
         last_afk_message[event.chat_id] = msg
+        if Config.PM_LOGGR_BOT_API_ID:
+            await bot.send_message(PM_LOGGR_BOT_API_ID ,f"#AFK_TAGS \n https://t.me/{event.chat_id}/{event.message.id}")
 
 
 @borg.on(admin_cmd(pattern=r"afk ?(.*)", outgoing=True))
