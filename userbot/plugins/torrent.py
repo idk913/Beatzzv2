@@ -152,8 +152,6 @@ async def show_all(event):
         )
     if len(msg) <= 4096:
         await event.edit("`On-going Downloads: `\n" + msg)
-        await sleep(5)
-        await event.delete()
     else:
         await event.edit("`Output is too big, sending it as a file...`")
         with open(output, "w") as f:
@@ -186,18 +184,18 @@ async def check_progress_for_dl(gid, event, previous):
             if not complete and not file.error_message:
                 percentage = int(file.progress)
                 downloaded = percentage * int(file.total_length) / 100
-                prog_str = "`Downloading` | [{0}{1}] `{2}`".format(
-                    "".join(["●" for i in range(math.floor(percentage / 10))]),
-                    "".join(["○" for i in range(10 - math.floor(percentage / 10))]),
+                prog_str = "**Downloading : **`[{0}{1}] {2}`".format(
+                    "".join(["▰" for i in range(math.floor(percentage / 10))]),
+                    "".join(["▱" for i in range(10 - math.floor(percentage / 10))]),
                     file.progress_string(),
                 )
                 msg = (
-                    f"`Name`: `{file.name}`\n"
-                    f"`Status` -> **{file.status.capitalize()}**\n"
+                    f"**Name : **`{file.name}`\n"
+                    f"**Status : **`{file.status.capitalize()}\n"
                     f"{prog_str}\n"
                     f"`{humanbytes(downloaded)} of {file.total_length_string()}"
                     f" @ {file.download_speed_string()}`\n"
-                    f"`ETA` -> {file.eta_string()}\n"
+                    f"**ETA** -> {file.eta_string()}\n"
                 )
                 if msg != previous:
                     await event.edit(msg)
@@ -210,10 +208,10 @@ async def check_progress_for_dl(gid, event, previous):
             complete = file.is_complete
             if complete:
                 return await event.edit(
-                    f"`Name`: `{file.name}`\n"
-                    f"`Size`: `{file.total_length_string()}`\n"
-                    f"`Path`: `{TMP_DOWNLOAD_DIRECTORY + file.name}`\n"
-                    "`Resp`: **OK** - Successfully downloaded..."
+                    f"**Name : **`{file.name}`\n"
+                    f"**Size : **`{file.total_length_string()}`\n"
+                    f"**Path : **`{TMP_DOWNLOAD_DIRECTORY + file.name}`\n"
+                    "**Resp : **`OK - Successfully downloaded...`"
                 )
         except Exception as e:
             if " not found" in str(e) or "'file'" in str(e):
