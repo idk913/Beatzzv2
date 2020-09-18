@@ -163,7 +163,7 @@ async def check_metadata(gid):
     return new_gid
 
 
-    async def check_progress_for_dl(gid, event, previous):
+async def check_progress_for_dl(gid, event, previous):
     complete = None
     while not complete:
         file = aria2.get_download(gid)
