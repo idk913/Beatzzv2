@@ -34,7 +34,7 @@ async def set_not_afk(event):
     if afk_start != {}:
         total_afk_time = str((afk_end - afk_start))
     current_message = event.message.message
-    if "afk" not in current_message and "yes" in USERAFK_ON:
+    if "afk" not in current_message and "on" in USERAFK_ON:
         shite = await borg.send_message(
             event.chat_id,
             "__Back alive!__\n**No Longer afk.**\n `Was afk for:``"
@@ -121,7 +121,7 @@ async def _(event):
         )
         if isinstance(last_seen_status.rules, types.PrivacyValueAllowAll):
             afk_time = datetime.now()
-        USERAFK_ON = f"yes: {reason}"
+        USERAFK_ON = f"on: {reason}"
         if reason:
             await borg.send_message(
                 event.chat_id, f"**I shall be Going afk!** __because ~ {reason}__"
