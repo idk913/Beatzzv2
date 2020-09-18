@@ -49,6 +49,7 @@ from . import (
     LOGS,
     TMP_DOWNLOAD_DIRECTORY,
     CancelProcess,
+    bot
 )
 from .sql_helper import google_drive_sql as helper
 from .torrent import aria2, check_metadata
@@ -1302,7 +1303,7 @@ async def check_progress_for_dl(gdrive, gid, previous):
 CMD_HELP.update(
     {
         "gdrive": "**Plugin :** `gdrive`"
-        "**Syntax : **`.gdauth`"
+        "\n\n**Syntax : **`.gdauth`"
         "\n**Usage : **generate token to enable all cmd google drive service."
         "\nThis only need to run once in life time."
         "\n\n**Syntax : **`.gdreset`"
@@ -1327,7 +1328,7 @@ CMD_HELP.update(
         "\n**Usage : **Change upload directory in gdrive."
         "\n\n**Syntax : **`.gdfset rm`"
         "\n**Usage : **remove set parentId from cmd\n>`.gdfset put` "
-        "into **G_DRIVE_FOLDER_ID** and if empty upload will go to root."
+        "\ninto **G_DRIVE_FOLDER_ID** and if empty upload will go to root."
         "\n\n**NOTE :**"
         "\nfor >`.gdlist` you can combine -l and -p flags with or without name "
         "at the same time, it must be `-l` flags first before use `-p` flags.\n"
