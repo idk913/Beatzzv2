@@ -176,53 +176,53 @@ async def check_metadata(gid):
 
 
 async def check_progress_for_dl(gid, event, previous):
-        file = aria2.get_download(gid)
-        complete = file.is_complete
-        try:
-            if not complete:
-                if not file.error_message:
-                    percentage = int(file.progress)
-                    downloaded = percentage * int(file.total_length) / 100
-                    prog_str = "**Downloading : **`[{0}{1}] {2}`".format(
-                        "".join(["▰" for i in range(math.floor(percentage / 10))]),
-                        "".join(["▱" for i in range(10 - math.floor(percentage / 10))]),
-                        file.progress_string(),
-                    )
-                    msg = (
-                        f"**Name : **`{file.name}`\n"
-                        f"**Status : **`{file.status.capitalize()}`\n"
-                        f"{prog_str}\n"
-                        f"`{humanbytes(downloaded)} of {file.total_length_string()}"
-                        f" @ {file.download_speed_string()}`\n"
-                        f"**ETA** -> `{file.eta_string()}`\n"
-                    )
-                    if msg != previous:
-                        await event.edit(msg)
-                        msg = previous
-                else:
-                    await event.edit("Error : `{}`".format(str(file.error_message)))
-                    return
-            else:
-                return await event.edit(
+    file = aria2.get_download(gid)
+    complete = file.is_complete
+    try:
+        if not complete:
+            if not file.error_message:
+                percentage = int(file.progress)
+                downloaded = percentage * int(file.total_length) / 100
+                prog_str = "**Downloading : **`[{0}{1}] {2}`".format(
+                    "".join(["▰" for i in range(math.floor(percentage / 10))]),
+                    "".join(["▱" for i in range(10 - math.floor(percentage / 10))]),
+                    file.progress_string(),
+                )
+                msg = (
                     f"**Name : **`{file.name}`\n"
-                    f"**Size : **`{file.total_length_string()}`\n"
-                    f"**Path : **`{TMP_DOWNLOAD_DIRECTORY + file.name}`\n"
-                    "**Resp : **`OK - Successfully downloaded...`"
+                    f"**Status : **`{file.status.capitalize()}`\n"
+                    f"{prog_str}\n"
+                    f"`{humanbytes(downloaded)} of {file.total_length_string()}"
+                    f" @ {file.download_speed_string()}`\n"
+                    f"**ETA** -> `{file.eta_string()}`\n"
                 )
-            await sleep(3)
-            await check_progress_for_dl(gid, event, previous)
-        except Exception as e:
-            if " not found" in str(e) or "'file'" in str(e):
-                await event.edit("Download Canceled :\n`{}`".format(file.name))
-                await sleep(2.5)
-                return await event.delete()
-            elif " depth exceeded" in str(e):
-                file.remove(force=True)
-                await event.edit(
-                    "Download Auto Canceled :\n`{}`\nYour Torrent/Link is Dead.".format(
-                        file.name
-                    )
+                if msg != previous:
+                    await event.edit(msg)
+                    msg = previous
+            else:
+                await event.edit("Error : `{}`".format(str(file.error_message)))
+                return
+        else:
+            return await event.edit(
+                f"**Name : **`{file.name}`\n"
+                f"**Size : **`{file.total_length_string()}`\n"
+                f"**Path : **`{TMP_DOWNLOAD_DIRECTORY + file.name}`\n"
+                "**Resp : **`OK - Successfully downloaded...`"
+            )
+        await sleep(3)
+        await check_progress_for_dl(gid, event, previous)
+    except Exception as e:
+        if " not found" in str(e) or "'file'" in str(e):
+            await event.edit("Download Canceled :\n`{}`".format(file.name))
+            await sleep(2.5)
+            return await event.delete()
+        elif " depth exceeded" in str(e):
+            file.remove(force=True)
+            await event.edit(
+                "Download Auto Canceled :\n`{}`\nYour Torrent/Link is Dead.".format(
+                    file.name
                 )
+            )
 
 
 CMD_HELP.update(
