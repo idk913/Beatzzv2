@@ -6,8 +6,8 @@ from datetime import datetime
 from telethon import events
 from telethon.tl import functions, types
 
-from userbot import CMD_HELP
-from userbot.utils import admin_cmd
+from . import CMD_HELP,BOTLOG_CHATID , BOTLOG
+from ..utils import admin_cmd
 
 global USER_AFK
 global afk_time
@@ -22,6 +22,8 @@ afk_start = {}
 
 @borg.on(events.NewMessage(outgoing=True))
 async def set_not_afk(event):
+    if event.chat_id in Config.UB_BLACK_LIST_CHAT:
+        return
     global USER_AFK
     global afk_time
     global last_afk_message
@@ -32,29 +34,20 @@ async def set_not_afk(event):
     if afk_start != {}:
         total_afk_time = str((afk_end - afk_start))
     current_message = event.message.message
-    if ".afk" not in current_message and "yes" in USER_AFK:
+    if "afk" not in current_message and "yes" in USER_AFK:
         shite = await borg.send_message(
             event.chat_id,
             "__Back alive!__\n**No Longer afk.**\n `Was afk for:``"
             + total_afk_time
             + "`",
         )
-        try:
+        if BOTLOG:
             await borg.send_message(
-                Config.PRIVATE_GROUP_BOT_API_ID,
+                BOTLOG_CHATID ,
                 "#AFKFALSE \nSet AFK mode to False\n"
                 + "__Back alive!__\n**No Longer afk.**\n `Was afk for:``"
                 + total_afk_time
                 + "`",
-            )
-        except Exception as e:
-            await borg.send_message(
-                event.chat_id,
-                "Please set `PRIVATE_GROUP_BOT_API_ID` "
-                + "for the proper functioning of afk functionality "
-                + "check pinned message in @catuserbot17.\n\n `{}`".format(str(e)),
-                reply_to=event.message.id,
-                silent=True,
             )
         await asyncio.sleep(5)
         await shite.delete()
@@ -67,6 +60,8 @@ async def set_not_afk(event):
 )
 async def on_afk(event):
     if event.fwd_from:
+        return
+    if event.chat_id in Config.UB_BLACK_LIST_CHAT:
         return
     global USER_AFK
     global afk_time
@@ -129,13 +124,11 @@ async def _(event):
             await borg.send_message(event.chat_id, f"**I am Going afk!**")
         await asyncio.sleep(5)
         await event.delete()
-        try:
+        if BOTLOG:
             await borg.send_message(
-                Config.PRIVATE_GROUP_BOT_API_ID,
+                BOTLOG_CHATID ,
                 f"#AFKTRUE \nSet AFK mode to True, and Reason is {reason}",
             )
-        except Exception as e:
-            logger.warn(str(e))
 
 
 CMD_HELP.update(
