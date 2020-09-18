@@ -180,7 +180,6 @@ async def check_progress_for_dl(gid, event, previous):
     while not complete:
         file = aria2.get_download(gid)
         complete = file.is_complete
-        await sleep(3)
         if complete:
             return await event.edit(
                 f"**Name : **`{file.name}`\n"
@@ -210,7 +209,7 @@ async def check_progress_for_dl(gid, event, previous):
                     msg = previous
             else:
                 await event.edit(f"`{msg}`")
-            await sleep(2)
+            await sleep(3)
             await check_progress_for_dl(gid, event, previous)
         except Exception as e:
             if " not found" in str(e) or "'file'" in str(e):
