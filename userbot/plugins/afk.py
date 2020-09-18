@@ -90,10 +90,11 @@ async def on_afk(event):
             await last_afk_message[event.chat_id].delete()
         last_afk_message[event.chat_id] = msg
         await asyncio.sleep(5)
+        hmm = await event.get_chat()
         if Config.PM_LOGGR_BOT_API_ID:
             await bot.send_message(
                 Config.PM_LOGGR_BOT_API_ID,
-                f"#AFK_TAGS \nhttps://t.me/c/{event.chat_id}/{event.message.id}",
+                f"#AFK_TAGS \nhttps://t.me/c/{hmm.id}/{event.message.id}",
             )
 
 
