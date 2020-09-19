@@ -672,7 +672,7 @@ async def upload(gdrive, service, file_path, file_name, mimeType):
                 or (uploaded == file_size)
             ):
                 await gdrive.edit(current_message)
-                display_message = current_message
+            display_message = current_message
     file_id = response.get("id")
     file_size = response.get("size")
     downloadURL = response.get("webContentLink")
