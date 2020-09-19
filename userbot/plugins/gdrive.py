@@ -645,6 +645,7 @@ async def upload(gdrive, service, file_path, file_name, mimeType):
             raise CancelProcess
 
         status, response = file.next_chunk()
+        await asyncio.sleep(1)
         if status:
             file_size = status.total_size
             diff = time.time() - current_time
