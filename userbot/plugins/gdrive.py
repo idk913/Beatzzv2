@@ -453,8 +453,7 @@ async def download_gdrive(gdrive, service, uri):
                         f"**ETA** -> `{time_formatter(eta)}`"
                     )
                     if (
-                        round(diff % 15.00) == 0
-                        and (display_message != current_message)
+                        (display_message != current_message)
                         or (downloaded == file_size)
                     ):
                         await gdrive.edit(current_message)
@@ -500,18 +499,17 @@ async def download_gdrive(gdrive, service, uri):
                         f"**ETA** -> `{time_formatter(eta)}`"
                     )
                     if (
-                        round(diff % 15.00) == 0
-                        and (display_message != current_message)
+                        (display_message != current_message)
                         or (downloaded == file_size)
                     ):
                         await gdrive.edit(current_message)
                         display_message = current_message
     await gdrive.edit(
-        "`[FILE - DOWNLOAD]`\n\n"
-        f"`Name   :` `{file_name}`\n"
-        f"`Size   :` `{humanbytes(file_size)}`\n"
-        f"`Path   :` `{file_path}`\n"
-        "`Status :` **OK** - Successfully downloaded."
+        "**[FILE - DOWNLOAD]**\n\n"
+        f"**Name   :** `{file_name}`\n"
+        f"**Size   :** `{humanbytes(file_size)}`\n"
+        f"**Path   :** `{file_path}`\n"
+        "**Status :** `OK - Successfully downloaded.`"
     )
     msg = await gdrive.respond("`Answer the question in your BOTLOG group`")
     async with gdrive.client.conversation(BOTLOG_CHATID) as conv:
@@ -533,16 +531,16 @@ async def download_gdrive(gdrive, service, uri):
             result = await upload(gdrive, service, file_path, file_name, mimeType)
         except CancelProcess:
             reply += (
-                "`[FILE - CANCELLED]`\n\n"
-                "`Status` : **OK** - received signal cancelled."
+                "**[FILE - CANCELLED]**\n\n"
+                "**Status : **`OK - received signal cancelled.`"
             )
         else:
             reply += (
-                "`[FILE - UPLOAD]`\n\n"
-                f"`Name   :` `{file_name}`\n"
-                f"`Size   :` `{humanbytes(result[0])}`\n"
-                f"`Link   :` [{file_name}]({result[1]})\n"
-                "`Status :` **OK**\n\n"
+                "**[FILE - UPLOAD]**\n\n"
+                f"**Name   :** `{file_name}`\n"
+                f"**Size   :** `{humanbytes(result[0])}`\n"
+                f"**Link   :** [{file_name}]({result[1]})\n"
+                "**Status : **`OK`\n\n"
             )
         return reply
     else:
@@ -1256,8 +1254,7 @@ async def check_progress_for_dl(event, gid, previous):
                         "".join(["▱" for i in range(10 - math.floor(percentage / 10))]),
                         file.progress_string(),
                     )
-                    msg = (
-                        "**[URI - DOWNLOAD]**\n\n"
+                    msg = ("**[URI - DOWNLOAD]**\n\n"
                         f"**Name : **`{file.name}`\n"
                         f"**Status : **`{file.status.capitalize()}`\n"
                         f"{prog_str}\n"
