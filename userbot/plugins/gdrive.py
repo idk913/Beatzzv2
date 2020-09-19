@@ -1273,7 +1273,7 @@ async def check_progress_for_dl(event, gid, previous):
                         await event.edit(msg)
                         msg = previous
 
-                    await sleep(3)
+                    await asyncio.sleep(3)
                     await check_progress_for_dl(gid, event, previous)
                 else:
                     await event.edit("Error : `{}`".format(str(file.error_message)))
@@ -1288,7 +1288,7 @@ async def check_progress_for_dl(event, gid, previous):
         except Exception as e:
             if " not found" in str(e) or "'file'" in str(e):
                 await event.edit("Download Canceled :\n`{}`".format(file.name))
-                await sleep(2.5)
+                await asyncio.sleep(2.5)
                 return await event.delete()
             elif " depth exceeded" in str(e):
                 file.remove(force=True)
