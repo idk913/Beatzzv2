@@ -651,15 +651,15 @@ async def upload(gdrive, service, file_path, file_name, mimeType):
             percentage = uploaded / file_size * 100
             speed = round(uploaded / diff, 2)
             eta = round((file_size - uploaded) / speed)
-            prog_str = "**Uploading : **`[{0}{1}] {2}`".format(
+            prog_str = "`Uploading :`\n`[{0}{1}] {2}`".format(
                 "".join(["▰" for i in range(math.floor(percentage / 10))]),
                 "".join(["▱" for i in range(10 - math.floor(percentage / 10))]),
                 round(percentage, 2),
             )
             current_message = (
-                "`[FILE - UPLOAD]`\n\n"
+                "**Uploading **\n\n"
                 f"**Name : **`{file_name}`\n"
-                f"**Status : **\n`{prog_str}`\n"
+                f"**Status : **\n{prog_str}\n"
                 f"`{humanbytes(uploaded)} of {humanbytes(file_size)} "
                 f"@ {humanbytes(speed)}`\n"
                 f"**ETA** -> `{time_formatter(eta)}`"
@@ -975,7 +975,7 @@ async def cancel_process(gdrive):
 async def google_drive(gdrive):
     reply = ""
     """ - Parsing all google drive function - """
-
+    start = datetime.now()
     value = gdrive.pattern_match.group(1)
     file_path = None
     uri = None
@@ -1136,16 +1136,16 @@ async def google_drive(gdrive):
         gdrive.respond(
             "`[FILE - CANCELLED]`\n\n" "`Status` : **OK** - received signal cancelled."
         )
+    end = datetime.now()
+    ms = (end - start).seconds
     if result:
-        await gdrive.respond(
-            "`[FILE - UPLOAD]`\n\n"
-            f"`Name   :` `{file_name}`\n"
-            f"`Size   :` `{humanbytes(result[0])}`\n"
-            f"`Link   :` [{file_name}]({result[1]})\n"
-            "`Status :` **OK** - Successfully uploaded.\n",
+        await gdrive.edit(
+            "**File Uploaded**\n\n"
+            f"**Link   :** [{file_name}]({result[1]})\n"
+            f"**Size   :** `{humanbytes(result[0])}`\n"
+            f"**Time Taken :** `{ms} seconds`"
             link_preview=False,
         )
-    await gdrive.delete()
     return
 
 
