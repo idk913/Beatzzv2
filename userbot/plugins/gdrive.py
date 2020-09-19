@@ -905,7 +905,9 @@ async def google_drive_managers(gdrive):
             except HttpError as e:
                 status.replace("DELETE]", "ERROR]")
                 reply += (
-                    f"**{status}**\n\n" "**Status : **`BAD`" f"**Reason : **`{str(e)}`\n\n"
+                    f"**{status}**\n\n"
+                    "**Status : **`BAD`"
+                    f"**Reason : **`{str(e)}`\n\n"
                 )
                 continue
             else:
@@ -939,7 +941,9 @@ async def google_drive_managers(gdrive):
             else:
                 status = "[FILE - EXIST]"
             msg = (
-                f"**{status}**\n\n" f"**Name  : **`{name_or_id}`\n" f"**ID    :** `{f_id}`\n"
+                f"**{status}**\n\n"
+                f"**Name  : **`{name_or_id}`\n"
+                f"**ID    :** `{f_id}`\n"
             )
             if mimeType != "application/vnd.google-apps.folder":
                 msg += f"**Size  :** `{humanbytes(f_size)}`\n"
@@ -1132,7 +1136,8 @@ async def google_drive(gdrive):
         result = await upload(gdrive, service, file_path, file_name, mimeType)
     except CancelProcess:
         gdrive.respond(
-            "**[FILE - CANCELLED]**\n\n" "**Status : **`OK - received signal cancelled.`"
+            "**[FILE - CANCELLED]**\n\n"
+            "**Status : **`OK - received signal cancelled.`"
         )
     end = datetime.now()
     ms = (end - start).seconds
