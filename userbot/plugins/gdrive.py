@@ -222,6 +222,7 @@ async def get_mimeType(name):
 
 
 async def download(gdrive, service, uri=None):
+    start = datetime.now()
     global is_cancelled
     reply = ""
     """ - Download files to local then upload - """
