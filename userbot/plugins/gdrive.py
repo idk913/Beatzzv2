@@ -452,9 +452,8 @@ async def download_gdrive(gdrive, service, uri):
                         f"@ {humanbytes(speed)}`\n"
                         f"**ETA** -> `{time_formatter(eta)}`"
                     )
-                    if (
-                        (display_message != current_message)
-                        or (downloaded == file_size)
+                    if (display_message != current_message) or (
+                        downloaded == file_size
                     ):
                         await gdrive.edit(current_message)
                         display_message = current_message
@@ -498,9 +497,8 @@ async def download_gdrive(gdrive, service, uri):
                         f"@ {humanbytes(speed)}`\n"
                         f"**ETA** -> `{time_formatter(eta)}`"
                     )
-                    if (
-                        (display_message != current_message)
-                        or (downloaded == file_size)
+                    if (display_message != current_message) or (
+                        downloaded == file_size
                     ):
                         await gdrive.edit(current_message)
                         display_message = current_message
@@ -1254,7 +1252,8 @@ async def check_progress_for_dl(event, gid, previous):
                         "".join(["▱" for i in range(10 - math.floor(percentage / 10))]),
                         file.progress_string(),
                     )
-                    msg = ("**[URI - DOWNLOAD]**\n\n"
+                    msg = (
+                        "**[URI - DOWNLOAD]**\n\n"
                         f"**Name : **`{file.name}`\n"
                         f"**Status : **`{file.status.capitalize()}`\n"
                         f"{prog_str}\n"
