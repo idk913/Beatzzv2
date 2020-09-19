@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-""" - ProjectBish Google Drive managers - """
+""" - Catuserbot Google Drive managers  ported from Projectbish- """
 import asyncio
 import base64
 import io
@@ -614,7 +614,7 @@ async def upload(gdrive, service, file_path, file_name, mimeType):
         pass
     body = {
         "name": file_name,
-        "description": "Uploaded from Telegram using ProjectBish userbot.",
+        "description": "Uploaded from Telegram using Catuserbot.",
         "mimeType": mimeType,
     }
     try:
