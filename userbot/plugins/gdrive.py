@@ -656,7 +656,6 @@ async def upload(gdrive, service, file_path, file_name, mimeType):
                 "".join(["▱" for i in range(10 - math.floor(percentage / 10))]),
                 round(percentage, 2),
             )
-            LOGS.info(f"hmm {display_message}")
             current_message = (
                 "`[FILE - UPLOAD]`\n\n"
                 f"**Name : **`{file_name}`\n"
@@ -665,14 +664,9 @@ async def upload(gdrive, service, file_path, file_name, mimeType):
                 f"@ {humanbytes(speed)}`\n"
                 f"**ETA** -> `{time_formatter(eta)}`"
             )
-            LOGS.info(current_message)
-            if (
-                round(diff % 15.00) == 0
-                and (display_message != current_message)
-                or (uploaded == file_size)
-            ):
+            if (display_message != current_message):
                 await gdrive.edit(current_message)
-            display_message = current_message
+                display_message = current_message
     file_id = response.get("id")
     file_size = response.get("size")
     downloadURL = response.get("webContentLink")
