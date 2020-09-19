@@ -1143,7 +1143,7 @@ async def google_drive(gdrive):
             "**File Uploaded**\n\n"
             f"**Link   :** [{file_name}]({result[1]})\n"
             f"**Size   :** `{humanbytes(result[0])}`\n"
-            f"**Time Taken :** `{ms} seconds`"
+            f"**Time Taken :** `{ms} seconds`",
             link_preview=False,
         )
     return
@@ -1256,7 +1256,7 @@ async def check_progress_for_dl(event, gid, previous):
                         "".join(["▱" for i in range(10 - math.floor(percentage / 10))]),
                         file.progress_string(),
                     )
-                    msg = (
+                    msg = ("**[URI - DOWNLOAD]**\n\n"
                         f"**Name : **`{file.name}`\n"
                         f"**Status : **`{file.status.capitalize()}`\n"
                         f"{prog_str}\n"
