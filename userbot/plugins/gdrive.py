@@ -641,9 +641,10 @@ async def upload(gdrive, service, file_path, file_name, mimeType):
     display_message = None
     is_cancelled = False
     while response is None:
+        LOGS.info("1")
         if is_cancelled is True:
             raise CancelProcess
-
+        LOGS.info("2")
         status, response = file.next_chunk()
         if status:
             file_size = status.total_size
@@ -652,19 +653,20 @@ async def upload(gdrive, service, file_path, file_name, mimeType):
             percentage = uploaded / file_size * 100
             speed = round(uploaded / diff, 2)
             eta = round((file_size - uploaded) / speed)
-            prog_str = "`Uploading` | [{0}{1}] `{2}%`".format(
-                "".join(["●" for i in range(math.floor(percentage / 10))]),
-                "".join(["○" for i in range(10 - math.floor(percentage / 10))]),
-                round(percentage, 2),
-            )
+            prog_str = "**Uploading : **`[{0}{1}] {2}`".format(
+                        "".join(["▰" for i in range(math.floor(percentage / 10))]),
+                        "".join(["▱" for i in range(10 - math.floor(percentage / 10))]),
+                        round(percentage, 2),
+                    )
             current_message = (
-                "`[FILE - UPLOAD]`\n\n"
-                f"`{file_name}`\n"
-                f"`Status`\n{prog_str}\n"
-                f"`{humanbytes(uploaded)} of {humanbytes(file_size)} "
-                f"@ {humanbytes(speed)}`\n"
-                f"`ETA` -> {time_formatter(eta)}"
-            )
+                        "`[FILE - UPLOAD]`\n\n"
+                        f"**Name : **`{file_name}`\n"
+                        f"**Status : **\n`{prog_str}`\n"
+                        f"`{humanbytes(downloaded)} of {humanbytes(file_size)} "
+                        f"@ {humanbytes(speed)}`\n"
+                        f"**ETA** -> `{time_formatter(eta)}`"
+                    )
+            LOGS.info(current_message)
             if (
                 round(diff % 15.00) == 0
                 and (display_message != current_message)
