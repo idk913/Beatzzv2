@@ -1177,7 +1177,7 @@ async def set_upload_folder(gdrive):
             else:
                 await gdrive.edit(
                     "**[FOLDER - SET]**\n\n"
-                    "*Status : **`OK`"
+                    "**Status : **`OK`"
                     " - `G_DRIVE_FOLDER_ID empty, will use root.`"
                 )
                 return None
