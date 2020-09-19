@@ -1089,7 +1089,7 @@ async def google_drive(gdrive):
                         reply += (
                             "**[FILE - ERROR]**\n\n"
                             "**Status : **`BAD`\n"
-                            f"*8Reason : **`{str(e)}`\n\n"
+                            f"**Reason : **`{str(e)}`\n\n"
                         )
                         continue
             if reply:
@@ -1177,7 +1177,7 @@ async def set_upload_folder(gdrive):
             else:
                 await gdrive.edit(
                     "**[FOLDER - SET]**\n\n"
-                    "*8Status : **`OK`"
+                    "*Status : **`OK`"
                     " - `G_DRIVE_FOLDER_ID empty, will use root.`"
                 )
                 return None
