@@ -1036,8 +1036,7 @@ async def google_drive(gdrive):
             return True
     elif not value and gdrive.reply_to_msg_id:
         reply += await download(gdrive, service)
-        await gdrive.respond(reply)
-        await gdrive.delete()
+        await gdrive.edit(reply , link_preview = False)
         return None
     else:
         if re.findall(r"\bhttps?://drive\.google\.com\S+", value):
