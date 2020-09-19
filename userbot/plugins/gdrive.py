@@ -39,8 +39,9 @@ from googleapiclient.errors import HttpError
 from googleapiclient.http import MediaFileUpload, MediaIoBaseDownload
 from telethon import events
 
-from ..utils import admin_cmd, human_to_bytes, humanbytes, progress, time_formatter
+from ..utils import admin_cmd, human_to_bytes, humanbytes,  time_formatter
 from . import (
+    progress,
     BOTLOG_CHATID,
     CMD_HELP,
     G_DRIVE_CLIENT_ID,
