@@ -304,10 +304,11 @@ async def download(gdrive, service, uri=None):
                 end = datetime.now()
                 ms = (end - start).seconds
                 reply += (
-                    f"**[FILE - UPLOAD] **\n\n"
+                    f"**File  Uploaded **\n\n"
+                    f"**Link :** [{file_name}]({result[1]})\n"
                     f"**Size   : **`{humanbytes(result[0])}`\n"
                     f"**Time Taken : ** `{ms} seconds`"
-                    f"**Link :** [{file_name}]({result[1]})\n"
+                    
                 )
                 return reply
         else:
