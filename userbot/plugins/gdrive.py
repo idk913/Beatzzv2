@@ -623,18 +623,19 @@ async def upload(gdrive, service, file_path, file_name, mimeType):
     except NameError:
         """ - Fallback to G_DRIVE_FOLDER_ID else root dir - """
         if G_DRIVE_FOLDER_ID is not None:
-            body["parents"] = [G_DRIVE_FOLDER_ID]
+            body['parents'] = [G_DRIVE_FOLDER_ID]
     else:
         """ - Override G_DRIVE_FOLDER_ID because parent_Id not empty - """
-        body["parents"] = [parent_Id]
-    media_body = MediaFileUpload(file_path, mimetype=mimeType, resumable=True)
-    """ - Start upload process - """
-    file = service.files().create(
-        body=body,
-        media_body=media_body,
-        fields="id, size, webContentLink",
-        supportsAllDrives=True,
+        body['parents'] = [parent_Id]
+    media_body = MediaFileUpload(
+        file_path,
+        mimetype=mimeType,
+        resumable=True
     )
+    """ - Start upload process - """
+    file = service.files().create(body=body, media_body=media_body,
+                                  fields="id, size, webContentLink",
+                                  supportsAllDrives=True)
     global is_cancelled
     current_time = time.time()
     response = None
@@ -645,7 +646,6 @@ async def upload(gdrive, service, file_path, file_name, mimeType):
             raise CancelProcess
 
         status, response = file.next_chunk()
-        await asyncio.sleep(1)
         if status:
             file_size = status.total_size
             diff = time.time() - current_time
@@ -653,24 +653,23 @@ async def upload(gdrive, service, file_path, file_name, mimeType):
             percentage = uploaded / file_size * 100
             speed = round(uploaded / diff, 2)
             eta = round((file_size - uploaded) / speed)
-            prog_str = "**Uploading : **`[{0}{1}] {2}`".format(
-                "".join(["▰" for i in range(math.floor(percentage / 10))]),
-                "".join(["▱" for i in range(10 - math.floor(percentage / 10))]),
-                round(percentage, 2),
-            )
+            prog_str = "`Uploading` | [{0}{1}] `{2}%`".format(
+                "".join(["●" for i in range(
+                        math.floor(percentage / 10))]),
+                "".join(["○" for i in range(
+                        10 - math.floor(percentage / 10))]),
+                round(percentage, 2))
             current_message = (
                 "`[FILE - UPLOAD]`\n\n"
-                f"**Name : **`{file_name}`\n"
-                f"**Status : **\n`{prog_str}`\n"
+                f"`{file_name}`\n"
+                f"`Status`\n{prog_str}\n"
                 f"`{humanbytes(uploaded)} of {humanbytes(file_size)} "
                 f"@ {humanbytes(speed)}`\n"
-                f"**ETA** -> `{time_formatter(eta)}`"
+                f"`ETA` -> {time_formatter(eta)}"
             )
-            if (
-                round(diff % 15.00) == 0
-                and (display_message != current_message)
-                or (uploaded == file_size)
-            ):
+            if round(diff % 15.00) == 0 and (
+              display_message != current_message) or (
+              uploaded == file_size):
                 await gdrive.edit(current_message)
                 display_message = current_message
     file_id = response.get("id")
