@@ -641,10 +641,8 @@ async def upload(gdrive, service, file_path, file_name, mimeType):
     display_message = None
     is_cancelled = False
     while response is None:
-        LOGS.info("1")
         if is_cancelled is True:
             raise CancelProcess
-        LOGS.info("2")
         status, response = file.next_chunk()
         if status:
             file_size = status.total_size
@@ -658,11 +656,12 @@ async def upload(gdrive, service, file_path, file_name, mimeType):
                 "".join(["▱" for i in range(10 - math.floor(percentage / 10))]),
                 round(percentage, 2),
             )
+            LOGS.info(f"hmm {display_message}")
             current_message = (
                 "`[FILE - UPLOAD]`\n\n"
                 f"**Name : **`{file_name}`\n"
                 f"**Status : **\n`{prog_str}`\n"
-                f"`{humanbytes(downloaded)} of {humanbytes(file_size)} "
+                f"`{humanbytes(uploaded)} of {humanbytes(file_size)} "
                 f"@ {humanbytes(speed)}`\n"
                 f"**ETA** -> `{time_formatter(eta)}`"
             )
