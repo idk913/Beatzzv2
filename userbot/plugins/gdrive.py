@@ -1144,7 +1144,7 @@ async def google_drive(gdrive):
         await gdrive.edit(
             f"**File Uploaded in **`{ms} seconds`\n\n"
             f"**➥ Size : **`{humanbytes(result[0])}`\n"
-            f"**➥ Link :** [{file_name}]({result[1]})\n"
+            f"**➥ Link :** [{file_name}]({result[1]})\n",
             link_preview=False,
         )
     return
