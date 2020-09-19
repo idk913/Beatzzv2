@@ -304,8 +304,8 @@ async def download(gdrive, service, uri=None):
                 end = datetime.now()
                 ms = (end - start).seconds
                 reply += (
-                    f"**File  Uploaded in **`{ms} seconds`\n\n"
-                    f"**➥ Size   : **`{humanbytes(result[0])}`\n"
+                    f"**File Uploaded in **`{ms} seconds`\n\n"
+                    f"**➥ Size : **`{humanbytes(result[0])}`\n"
                     f"**➥ Link :** [{file_name}]({result[1]})\n"
                 )
                 return reply
@@ -1142,10 +1142,9 @@ async def google_drive(gdrive):
     ms = (end - start).seconds
     if result:
         await gdrive.edit(
-            "**File Uploaded**\n\n"
-            f"**Link   :** [{file_name}]({result[1]})\n"
-            f"**Size   :** `{humanbytes(result[0])}`\n"
-            f"**Time Taken :** `{ms} seconds`",
+            f"**File Uploaded in **`{ms} seconds`\n\n"
+            f"**➥ Size : **`{humanbytes(result[0])}`\n"
+            f"**➥ Link :** [{file_name}]({result[1]})\n"
             link_preview=False,
         )
     return
