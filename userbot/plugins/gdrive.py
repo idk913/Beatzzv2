@@ -839,7 +839,7 @@ async def google_drive_managers(gdrive):
             """
             - Create a directory, abort if exist when parent not given -
             """
-            status = "[FOLDER - EXIST]"
+            status = "**FOLDER - EXIST**"
             try:
                 folder = result.get("files", [])[0]
             except IndexError:
@@ -917,9 +917,9 @@ async def google_drive_managers(gdrive):
             downloadURL = f.get("webContentLink")
             description = f.get("description")
             if mimeType == "application/vnd.google-apps.folder":
-                status = "[FOLDER - EXIST]"
+                status = "**FOLDER - EXIST **"
             else:
-                status = "[FILE - EXIST]"
+                status = "**FILE - EXIST **"
             msg = (
                 f"**{status}**\n\n"
                 f"**Name  : **`{name_or_id}`\n"
