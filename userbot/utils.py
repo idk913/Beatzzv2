@@ -205,19 +205,19 @@ def admin_cmd(pattern=None, **args):
 
 
 # from paperplaneextended
-on = bot.on
+#on = bot.on
 
 
-def on(**args):
-    def decorator(func):
-        async def wrapper(event):
-            # do things like check if sudo
-            await func(event)
+#def on(**args):
+#    def decorator(func):
+#        async def wrapper(event):
+#            # do things like check if sudo
+#            await func(event)
 
-        client.add_event_handler(wrapper, events.NewMessage(**args))
-        return wrapper
+#        client.add_event_handler(wrapper, events.NewMessage(**args))
+#        return wrapper
 
-    return decorater
+#    return decorater
 
 
 def register(**args):
