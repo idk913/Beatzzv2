@@ -345,6 +345,7 @@ async def download(gdrive, service, uri=None):
 
 async def download_gdrive(gdrive, service, uri):
     reply = ""
+    start = datetime.now()
     global is_cancelled
     """ - remove drivesdk and export=download from link - """
     if not isdir(TMP_DOWNLOAD_DIRECTORY):
@@ -450,7 +451,7 @@ async def download_gdrive(gdrive, service, uri):
                     current_message = (
                         "**[FILE - DOWNLOAD]**\n\n"
                         f"**Name : **`{file_name}`\n"
-                        f"**Status : **\n`{prog_str}`\n"
+                        f"**Status : **\n{prog_str}\n"
                         f"`{humanbytes(downloaded)} of {humanbytes(file_size)} "
                         f"@ {humanbytes(speed)}`\n"
                         f"**ETA : **  `{time_formatter(eta)}`"
@@ -495,7 +496,7 @@ async def download_gdrive(gdrive, service, uri):
                     current_message = (
                         "**[FILE - DOWNLOAD]**\n\n"
                         f"**Name : **`{file_name}`\n"
-                        f"**Status : **\n`{prog_str}`\n"
+                        f"**Status : **\n{prog_str}\n"
                         f"`{humanbytes(downloaded)} of {humanbytes(file_size)} "
                         f"@ {humanbytes(speed)}`\n"
                         f"**ETA : ** `{time_formatter(eta)}`"
@@ -512,19 +513,6 @@ async def download_gdrive(gdrive, service, uri):
         f"**Path   :** `{file_path}`\n"
         "**Status :** `OK - Successfully downloaded.`"
     )
-    msg = await gdrive.respond("`Answer the question in your BOTLOG group`")
-    async with gdrive.client.conversation(BOTLOG_CHATID) as conv:
-        ask = await conv.send_message("`Proceed with mirroring? [y/N]`")
-        try:
-            r = conv.wait_event(events.NewMessage(outgoing=True, chats=BOTLOG_CHATID))
-            r = await r
-        except Exception:
-            pass
-        else:
-            r.message.message.strip()
-            await gdrive.client.delete_messages(BOTLOG_CHATID, r.id)
-        await gdrive.client.delete_messages(gdrive.chat_id, msg.id)
-        await gdrive.client.delete_messages(BOTLOG_CHATID, ask.id)
     try:
         result = await upload(gdrive, service, file_path, file_name, mimeType)
     except CancelProcess:
