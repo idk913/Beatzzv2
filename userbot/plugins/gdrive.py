@@ -525,30 +525,22 @@ async def download_gdrive(gdrive, service, uri):
             await gdrive.client.delete_messages(BOTLOG_CHATID, r.id)
         await gdrive.client.delete_messages(gdrive.chat_id, msg.id)
         await gdrive.client.delete_messages(BOTLOG_CHATID, ask.id)
-    if ans.capitalize() == "N":
-        return reply
-    elif ans.capitalize() == "Y":
-        try:
-            result = await upload(gdrive, service, file_path, file_name, mimeType)
-        except CancelProcess:
-            reply += (
+    try:
+        result = await upload(gdrive, service, file_path, file_name, mimeType)
+    except CancelProcess:
+        reply += (
                 "**[FILE - CANCELLED]**\n\n"
                 "**Status : **`OK - received signal cancelled.`"
             )
-        else:
-            reply += (
-                "**[FILE - UPLOAD]**\n\n"
-                f"**Name   :** `{file_name}`\n"
-                f"**Size   :** `{humanbytes(result[0])}`\n"
-                f"**Link   :** [{file_name}]({result[1]})\n"
-                "**Status : **`OK`\n\n"
-            )
-        return reply
     else:
-        await gdrive.client.send_message(
-            BOTLOG_CHATID, "`Invalid answer type [Y/N] only...`"
-        )
-        return reply
+        end = datetime.now()
+        ms = (end - start).seconds
+        reply += (
+                    f"**File Uploaded in **`{ms} seconds`\n\n"
+                    f"**➥ Size : **`{humanbytes(result[0])}`\n"
+                    f"**➥ Link :** [{file_name}]({result[1]})\n"
+                )
+    return reply
 
 
 async def change_permission(service, Id):
