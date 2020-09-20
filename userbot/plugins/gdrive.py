@@ -519,9 +519,9 @@ async def download_gdrive(gdrive, service, uri):
             r = conv.wait_event(events.NewMessage(outgoing=True, chats=BOTLOG_CHATID))
             r = await r
         except Exception:
-            ans = "N"
+            pass
         else:
-            ans = r.message.message.strip()
+            r.message.message.strip()
             await gdrive.client.delete_messages(BOTLOG_CHATID, r.id)
         await gdrive.client.delete_messages(gdrive.chat_id, msg.id)
         await gdrive.client.delete_messages(BOTLOG_CHATID, ask.id)
@@ -529,17 +529,17 @@ async def download_gdrive(gdrive, service, uri):
         result = await upload(gdrive, service, file_path, file_name, mimeType)
     except CancelProcess:
         reply += (
-                "**[FILE - CANCELLED]**\n\n"
-                "**Status : **`OK - received signal cancelled.`"
-            )
+            "**[FILE - CANCELLED]**\n\n"
+            "**Status : **`OK - received signal cancelled.`"
+        )
     else:
         end = datetime.now()
         ms = (end - start).seconds
         reply += (
-                    f"**File Uploaded in **`{ms} seconds`\n\n"
-                    f"**➥ Size : **`{humanbytes(result[0])}`\n"
-                    f"**➥ Link :** [{file_name}]({result[1]})\n"
-                )
+            f"**File Uploaded in **`{ms} seconds`\n\n"
+            f"**➥ Size : **`{humanbytes(result[0])}`\n"
+            f"**➥ Link :** [{file_name}]({result[1]})\n"
+        )
     return reply
 
 
