@@ -113,7 +113,7 @@ logger.setLevel(logging.ERROR)
 # =========================================================== #
 
 
-@bot.on(admin_cmd(pattern="gdauth(?: |$)", outgoing=True))
+@bot.on(admin_cmd(pattern="gauth(?: |$)", outgoing=True))
 async def generate_credentials(gdrive):
     """ - Only generate once for long run - """
     if helper.get_credentials(str(gdrive.from_id)) is not None:
@@ -197,7 +197,7 @@ async def create_app(gdrive):
     return service
 
 
-@bot.on(admin_cmd(pattern="gdreset(?: |$)", outgoing=True))
+@bot.on(admin_cmd(pattern="greset(?: |$)", outgoing=True))
 async def reset_credentials(gdrive):
     """ - Reset credentials or change account - """
     await gdrive.edit("`Resetting information...`")
@@ -692,7 +692,7 @@ async def reset_parentId():
     return
 
 
-@bot.on(admin_cmd(pattern=r"gdlist(?: |$)(-l \d+)?(?: |$)?(.*)?(?: |$)", outgoing=True))
+@bot.on(admin_cmd(pattern=r"glist(?: |$)(-l \d+)?(?: |$)?(.*)?(?: |$)", outgoing=True))
 async def lists(gdrive):
     await gdrive.edit("`Getting information...`")
     checker = gdrive.pattern_match.group(1)
@@ -795,7 +795,7 @@ async def lists(gdrive):
     return
 
 
-@bot.on(admin_cmd(pattern="gdf (mkdir|rm|chck) (.*)", outgoing=True))
+@bot.on(admin_cmd(pattern="gf (mkdir|rm|chck) (.*)", outgoing=True))
 async def google_drive_managers(gdrive):
     """ - Google Drive folder/file management - """
     await gdrive.edit("`Sending information...`")
@@ -941,7 +941,7 @@ async def google_drive_managers(gdrive):
     return
 
 
-@bot.on(admin_cmd(pattern="gdabort(?: |$)", outgoing=True))
+@bot.on(admin_cmd(pattern="gabort(?: |$)", outgoing=True))
 async def cancel_process(gdrive):
     """
     Abort process for download and upload
@@ -1133,7 +1133,7 @@ async def google_drive(gdrive):
     return
 
 
-@bot.on(admin_cmd(pattern="gdfset (put|rm)(?: |$)(.*)", outgoing=True))
+@bot.on(admin_cmd(pattern="gfset (put|rm)(?: |$)(.*)", outgoing=True))
 async def set_upload_folder(gdrive):
     """ - Set parents dir for upload/check/makedir/remove - """
     await gdrive.edit("`Sending information...`")
@@ -1282,34 +1282,34 @@ async def check_progress_for_dl(event, gid, previous):
 CMD_HELP.update(
     {
         "gdrive": "**Plugin :** `gdrive`"
-        "\n\n**Syntax : **`.gdauth`"
+        "\n\n**Syntax : **`.gauth`"
         "\n**Usage : **generate token to enable all cmd google drive service."
         "\nThis only need to run once in life time."
-        "\n\n**Syntax : **`.gdreset`"
+        "\n\n**Syntax : **`.greset`"
         "\n**Usage : **reset your token if something bad happened or change drive acc."
         "\n\n**Syntax : **`.ugd`"
         "\n**Usage : **Upload file from local or uri/url/drivelink into google drive."
         "\nfor drivelink it's upload only if you want to."
-        "\n\n**Syntax : **`.gdabort`"
+        "\n\n**Syntax : **`.gabort`"
         "\n**Usage : **Abort process uploading or downloading."
-        "\n\n**Syntax : **`.gdlist`"
+        "\n\n**Syntax : **`.gf mkdir`"
+        "\n**Usage : **Create gdrive folder."
+        "\n\n**Syntax : **`.gf chck`"
+        "\n**Usage : **Check file/folder in gdrive."
+        "\n\n**Syntax : **`.gf rm`"
+        "\n**Usage : **Delete files/folders in gdrive."
+        "\nCan't be undone, this method skipping file trash, so be caution..."
+        "\n\n**Syntax : **`.gfset put`"
+        "\n**Usage : **Change upload directory in gdrive."
+        "\ninto **G_DRIVE_FOLDER_ID** and if empty upload will go to root."
+        "\n\n**Syntax : **`.gfset rm`"
+        "\n**Usage : **remove set parentId from cmd\n>`.gfset put` "
+        "\n\n**Syntax : **`.glist`"
         "\n**Usage : **Get list of folders and files with default size 50."
         "\nUse flags `-l range[1-1000]` for limit output."
         "\nUse flags `-p parents-folder_id` for lists given folder in gdrive."
-        "\n\n**Syntax : **`.gdf mkdir`"
-        "\n**Usage : **Create gdrive folder."
-        "\n\n**Syntax : **`.gdf chck`"
-        "\n**Usage : **Check file/folder in gdrive."
-        "\n\n**Syntax : **`.gdf rm`"
-        "\n**Usage : **Delete files/folders in gdrive."
-        "\nCan't be undone, this method skipping file trash, so be caution..."
-        "\n\n**Syntax : **`.gdfset put`"
-        "\n**Usage : **Change upload directory in gdrive."
-        "\ninto **G_DRIVE_FOLDER_ID** and if empty upload will go to root."
-        "\n\n**Syntax : **`.gdfset rm`"
-        "\n**Usage : **remove set parentId from cmd\n>`.gdfset put` "
         "\n\n**NOTE :**"
-        "\nfor `.gdlist` you can combine -l and -p flags with or without name "
+        "\nfor `.glist` you can combine -l and -p flags with or without name "
         "at the same time, it must be `-l` flags first before use `-p` flags.\n"
         "And by default it lists from latest 'modifiedTime' and then folders."
     }
