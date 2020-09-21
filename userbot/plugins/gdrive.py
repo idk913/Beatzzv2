@@ -406,8 +406,8 @@ async def copy_dir(service, file_id, dir_id):
     for file in files:
         if file["mimeType"] == "application/vnd.google-apps.folder":
             folder = await create_dir(service, file["name"], dir_id)
-            dir_id = folder.get("id")
-            new_id = await copy_dir(service, file["id"], dir_id)
+            catdir_id = folder.get("id")
+            new_id = await copy_dir(service, file["id"], catdir_id)
         else:
             await copy_file(service, file["id"], dir_id)
             await asyncio.sleep(0.5)
