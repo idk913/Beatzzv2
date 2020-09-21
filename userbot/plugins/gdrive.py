@@ -443,12 +443,12 @@ async def download_gdrive(gdrive, service, uri):
     global parent_Id
     try:
         if parent_Id is not None:
-            parent_Id = parent_Id
+            dir_id = parent_Id
     except NameError:
         if G_DRIVE_FOLDER_ID is not None:
-            parent_Id = G_DRIVE_FOLDER_ID
+            dir_id = G_DRIVE_FOLDER_ID
         else:
-            parent_Id = []
+            dir_id = []
     try:
         file = (
             service.files()
@@ -456,11 +456,12 @@ async def download_gdrive(gdrive, service, uri):
             .execute()
         )
         if file["mimeType"] == "application/vnd.google-apps.folder":
-            await create_dir(service, file["name"])
-            gcopycat = await copy_dir(service, file_Id, parent_Id)
-            ret_id = gcopycat
+            folder = await create_dir(service, file["name"])
+            dir_id = folder.get("id")
+            await copy_dir(service, file_Id, dir_id)
+            ret_id = folder
         else:
-            ret_id = await copy_file(service, file_Id, parent_Id)
+            ret_id = await copy_file(service, file_Id, dir_id)
         reply = f"id = `{ret_id}`"
     except HttpError as e:
         reply = f"**Error : **{str(e)}"
