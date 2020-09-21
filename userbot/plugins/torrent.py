@@ -129,7 +129,7 @@ async def resume_all(event):
     await event.delete()
 
 
-@borg.on(admin_cmd(pattern=r"ashow$"))
+@bot.on(admin_cmd(pattern=r"ashow$"))
 async def show_all(event):
     output = "output.txt"
     downloads = aria2.get_downloads()
