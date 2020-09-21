@@ -754,7 +754,7 @@ async def lists(gdrive):
             )
         except HttpError as e:
             await gdrive.edit(
-                "`[GDRIVE - LIST]`\n\n" "`Status` : **BAD**\n" f"`Reason` : {str(e)}"
+                "**[GDRIVE - LIST]**\n\n" "**Status : **`BAD`\n" f"**Reason : **`{str(e)}`"
             )
             return
         for files in response.get("files", []):
