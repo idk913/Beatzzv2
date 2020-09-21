@@ -389,7 +389,7 @@ async def list_drive_dir(service, file_id):
 async def copy_file(service, file_id, dir_id):
     body = {}
     if parent_id:
-        body["parents"] = [parent_id]
+        body["parents"] = [dir_id]
     drive_file = (
         service.files()
         .copy(body=body, fileId=file_id, supportsTeamDrives=True)
@@ -401,7 +401,7 @@ async def copy_file(service, file_id, dir_id):
 async def copy_dir(service, file_id, dir_id):
     files = await list_drive_dir(service, file_id)
     if len(files) == 0:
-        return parent_id
+        return dir_id
     new_id = None
     for file in files:
         if file["mimeType"] == "application/vnd.google-apps.folder":
@@ -441,6 +441,14 @@ async def download_gdrive(gdrive, service, uri):
                     file_Id = uri
     file_Id, _ = await get_file_id(file_Id)
     global parent_Id
+    try:
+        if parent_Id is not None:
+            parent_Id = parent_Id
+    except NameError:
+        if G_DRIVE_FOLDER_ID is not None:
+            parent_Id = G_DRIVE_FOLDER_ID
+        else:
+            parent_Id = ""
     try:
         file = (
             service.files()
