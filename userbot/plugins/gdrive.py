@@ -405,7 +405,7 @@ async def copy_dir(service, file_id, dir_id):
     new_id = None
     for file in files:
         if file["mimeType"] == "application/vnd.google-apps.folder":
-            folder = await create_dir(service, file["name"])
+            folder = await create_dir(service, file["name"] , dir_id)
             dir_id = folder.get("id")
             new_id = await copy_dir(service, file["id"], dir_id)
         else:
@@ -500,21 +500,24 @@ async def get_information(service, Id):
     return r
 
 
-async def create_dir(service, folder_name):
-    metadata = {
-        "name": folder_name,
-        "mimeType": "application/vnd.google-apps.folder",
-    }
-    try:
-        if parent_Id is not None:
-            pass
-    except NameError:
-        """ - Fallback to G_DRIVE_FOLDER_ID else root dir - """
-        if G_DRIVE_FOLDER_ID is not None:
-            metadata["parents"] = [G_DRIVE_FOLDER_ID]
+async def create_dir(service, folder_name , dir_id = None):
+    if not dir_id:
+        metadata = {
+            "name": folder_name,
+            "mimeType": "application/vnd.google-apps.folder",
+        }
+        try:
+            if parent_Id is not None:
+                pass
+        except NameError:
+            """ - Fallback to G_DRIVE_FOLDER_ID else root dir - """
+            if G_DRIVE_FOLDER_ID is not None:
+                metadata["parents"] = [G_DRIVE_FOLDER_ID]
+        else:
+            """ - Override G_DRIVE_FOLDER_ID because parent_Id not empty - """
+            metadata["parents"] = [parent_Id]
     else:
-        """ - Override G_DRIVE_FOLDER_ID because parent_Id not empty - """
-        metadata["parents"] = [parent_Id]
+        metadata["parents"] = [dir_id]
     folder = (
         service.files()
         .create(body=metadata, fields="id, webViewLink", supportsAllDrives=True)
