@@ -697,7 +697,6 @@ async def reset_parentId():
 
 @bot.on(admin_cmd(pattern=r"glist(?: |$)(-l \d+)?(?: |$)?(.*)?(?: |$)", outgoing=True))
 async def lists(gdrive):
-    global parent_Id
     await gdrive.edit("`Getting information...`")
     checker = gdrive.pattern_match.group(1)
     if checker is not None:
@@ -731,6 +730,7 @@ async def lists(gdrive):
                 name = checker
                 query = f"name contains '{name}'"
     else:
+        global parent_Id
         query = parent_Id
     service = await create_app(gdrive)
     if service is False:
