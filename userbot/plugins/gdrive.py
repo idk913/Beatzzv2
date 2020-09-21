@@ -417,7 +417,7 @@ async def download_gdrive(gdrive, service, uri):
     try:
         file = service.files().get(fileId=file_id, fields="name, mimeType", supportsTeamDrives=True).execute()
         if file["mimeType"] == "application/vnd.google-apps.folder":
-            dir_id = await create_dir(service , file["name"]):
+            dir_id = await create_dir(service , file["name"])
             gcopycat =await  copy_dir(service , file_id, dir_id)
             ret_id = gcopycat
         else:
@@ -1211,11 +1211,11 @@ CMD_HELP.update(
         "\nfor drivelink it's upload only if you want to."
         "\n\n**Syntax : **`.gabort`"
         "\n**Usage : **Abort process uploading or downloading."
-        "\n\n**Syntax : **`.gf mkdir`"
+        "\n\n**Syntax : **`.gdf mkdir`"
         "\n**Usage : **Create gdrive folder."
-        "\n\n**Syntax : **`.gf chck`"
+        "\n\n**Syntax : **`.gdf chck`"
         "\n**Usage : **Check file/folder in gdrive."
-        "\n\n**Syntax : **`.gf rm`"
+        "\n\n**Syntax : **`.gdf rm`"
         "\n**Usage : **Delete files/folders in gdrive."
         "\nCan't be undone, this method skipping file trash, so be caution..."
         "\n\n**Syntax : **`.gfset put`"
