@@ -730,12 +730,14 @@ async def lists(gdrive):
                 query = f"name contains '{name}'"
     else:
         global parent_Id
-        if parent_Id is not None:
-            query = f"'{parent_Id}' in parents and (name contains '*')"
-        elif G_DRIVE_FOLDER_ID is not None:
-            query = f"'{G_DRIVE_FOLDER_ID}' in parents and (name contains '*')"
-        else:
-            query = ""
+        try:
+            if parent_Id is not None:
+                query = f"'{parent_Id}' in parents and (name contains '*')"
+        except NameError:
+            if G_DRIVE_FOLDER_ID is not None:
+                query = f"'{G_DRIVE_FOLDER_ID}' in parents and (name contains '*')"
+            else:
+                query = ""
     service = await create_app(gdrive)
     if service is False:
         return False
