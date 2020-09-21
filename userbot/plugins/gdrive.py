@@ -730,6 +730,7 @@ async def lists(gdrive):
                 name = checker
                 query = f"name contains '{name}'"
     else:
+        global parent_Id
         if parent_Id is not None:
             query = f"'{parent_Id}' in parents and (name contains '*')"
         elif G_DRIVE_FOLDER_ID is not None:
