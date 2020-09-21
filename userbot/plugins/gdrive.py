@@ -847,7 +847,7 @@ async def google_drive_managers(gdrive):
                 folder = result.get("files", [])[0]
             except IndexError:
                 folder = await create_dir(service, name_or_id)
-                status = status.replace("EXIST]", "CREATED]")
+                status = status.replace("EXIST", "CREATED")
             folder_id = folder.get("id")
             webViewURL = folder.get("webViewLink")
             if "CREATED" in status:
@@ -855,7 +855,7 @@ async def google_drive_managers(gdrive):
                 await change_permission(service, folder_id)
             reply += (
                 f"**{status}**\n\n"
-                f"`{name_or_id}`\n"
+                f"**Folder Name : **`{name_or_id}`\n"
                 f"**ID  :** `{folder_id}`\n"
                 f"**URL :** [Open]({webViewURL})\n\n"
             )
