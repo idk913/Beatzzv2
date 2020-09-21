@@ -696,6 +696,9 @@ async def reset_parentId():
 
 
 @bot.on(admin_cmd(pattern=r"glist(?: |$)(-l \d+)?(?: |$)?(.*)?(?: |$)", outgoing=True))
+async def catlists(gdrive):
+    await lists(gdrive)
+
 async def lists(gdrive):
     await gdrive.edit("`Getting information...`")
     checker = gdrive.pattern_match.group(1)
