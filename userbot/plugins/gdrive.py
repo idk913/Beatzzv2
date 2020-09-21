@@ -430,15 +430,15 @@ async def download_gdrive(gdrive, service, uri):
     try:
         file = (
             service.files()
-            .get(fileId=file_id, fields="name, mimeType", supportsTeamDrives=True)
+            .get(fileId=file_Id, fields="name, mimeType", supportsTeamDrives=True)
             .execute()
         )
         if file["mimeType"] == "application/vnd.google-apps.folder":
             dir_id = await create_dir(service, file["name"])
-            gcopycat = await copy_dir(service, file_id, dir_id)
+            gcopycat = await copy_dir(service, file_Id, parent_Id)
             ret_id = gcopycat
         else:
-            ret_id = await copy_file(service, file_id, file_Id)
+            ret_id = await copy_file(service, file_Id, parent_Id)
         reply = f"id = `{ret_id}`"
     except HttpError as e:
         reply = f"**Error : **{str(e)}"
