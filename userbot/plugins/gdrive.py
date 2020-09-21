@@ -417,7 +417,7 @@ async def copy_dir(service, file_id, dir_id):
 
 async def download_gdrive(gdrive, service, uri):
     reply = ""
-    datetime.now()
+    start = datetime.now()
     global is_cancelled
     """ - remove drivesdk and export=download from link - """
     if "&export=download" in uri:
@@ -460,12 +460,18 @@ async def download_gdrive(gdrive, service, uri):
             folder = await create_dir(service, file["name"])
             dir_id = folder.get("id")
             await copy_dir(service, file_Id, dir_id)
-            ret_id = folder
+            end = datetime.now()
+            ms = (end - start).seconds
+            reply = (f"**Folder successfully copied in** `{ms} seconds`"
+                     f"**Link : **[{file["name"]}]({folder["webViewLink"]})")
         else:
             ret_id = await copy_file(service, file_Id, dir_id)
-        reply = f"id = `{ret_id}`"
+            end = datetime.now()
+            ms = (end - start).seconds
+            reply = (f"**File successfully copied in** `{ms} seconds`"
+                     f"**Link : **[link](https://drive.google.com/open?id={ret_id})")
     except HttpError as e:
-        reply = f"**Error : **{str(e)}"
+        reply = f"**Error : **`{str(e)}`"
     return reply
 
 
@@ -1097,13 +1103,13 @@ async def google_drive(gdrive):
     return
 
 
-@bot.on(admin_cmd(pattern="gfset (put|rm)(?: |$)(.*)", outgoing=True))
+@bot.on(admin_cmd(pattern="(gdfset|gdfclear)(?: |$)(.*)", outgoing=True))
 async def set_upload_folder(gdrive):
     """ - Set parents dir for upload/check/makedir/remove - """
     await gdrive.edit("`Sending information...`")
     global parent_Id
     exe = gdrive.pattern_match.group(1)
-    if exe == "rm":
+    if exe == "gdfclear":
         if G_DRIVE_FOLDER_ID is not None:
             parent_Id = G_DRIVE_FOLDER_ID
             await gdrive.edit(
@@ -1263,10 +1269,10 @@ CMD_HELP.update(
         "\n\n**Syntax : **`.gdf rm`"
         "\n**Usage : **Delete files/folders in gdrive."
         "\nCan't be undone, this method skipping file trash, so be caution..."
-        "\n\n**Syntax : **`.gfset put`"
+        "\n\n**Syntax : **`.gdfset`"
         "\n**Usage : **Change upload directory in gdrive."
         "\ninto **G_DRIVE_FOLDER_ID** and if empty upload will go to root."
-        "\n\n**Syntax : **`.gfset rm`"
+        "\n\n**Syntax : **`.gdfclear`"
         "\n**Usage : **remove set parentId from cmd\n>`.gfset put` "
         "\n\n**Syntax : **`.glist`"
         "\n**Usage : **Get list of folders and files with default size 50."
