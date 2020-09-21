@@ -388,7 +388,7 @@ async def list_drive_dir(service, file_id):
 
 async def copy_file(service, file_id, dir_id):
     body = {}
-    if parent_id:
+    if dir_id:
         body["parents"] = [dir_id]
     drive_file = (
         service.files()
@@ -448,7 +448,7 @@ async def download_gdrive(gdrive, service, uri):
         if G_DRIVE_FOLDER_ID is not None:
             parent_Id = G_DRIVE_FOLDER_ID
         else:
-            parent_Id = ""
+            parent_Id = []
     try:
         file = (
             service.files()
