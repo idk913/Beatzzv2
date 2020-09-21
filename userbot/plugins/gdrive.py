@@ -440,6 +440,7 @@ async def download_gdrive(gdrive, service, uri):
                     """ - if error parse in url, assume given value is Id - """
                     file_Id = uri
     file_Id, _ = await get_file_id(file_Id)
+    global parent_Id
     try:
         file = (
             service.files()
