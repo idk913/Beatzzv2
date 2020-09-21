@@ -111,6 +111,7 @@ logger.setLevel(logging.ERROR)
 # =========================================================== #
 #                                                             #
 # =========================================================== #
+GDRIVE_ID = re.compile(r'https://drive.google.com/[\w\?\./&=]+([-\w]{33}|(?<=[/=])0(?:A[-\w]{17}|B[-\w]{26}))')
 
 
 @bot.on(admin_cmd(pattern="gauth(?: |$)", outgoing=True))
@@ -795,7 +796,7 @@ async def lists(gdrive):
     return
 
 
-@bot.on(admin_cmd(pattern="gf (mkdir|rm|chck) (.*)", outgoing=True))
+@bot.on(admin_cmd(pattern="gdf (mkdir|rm|chck) (.*)", outgoing=True))
 async def google_drive_managers(gdrive):
     """ - Google Drive folder/file management - """
     await gdrive.edit("`Sending information...`")
@@ -808,7 +809,16 @@ async def google_drive_managers(gdrive):
     reply = ""
     for name_or_id in f_name:
         """ - in case given name has a space beetween ; - """
+        
         name_or_id = name_or_id.strip()
+        #ported from userge
+        found = GDRIVE_ID.search(name_or_id)
+        if found and 'folder' in name_or_id:
+                    name_or_id = (found.group(1), "folder")
+        elif found:
+                    name_or_id = (found.group(1), "file")
+        else:
+                    name_or_id = (link, "unknown")
         metadata = {
             "name": name_or_id,
             "mimeType": "application/vnd.google-apps.folder",
@@ -873,28 +883,28 @@ async def google_drive_managers(gdrive):
                 except Exception as e:
                     reply += (
                         f"**[FILE/FOLDER - ERROR]**\n\n"
-                        "**Status : **`BAD`"
-                        f"**Reason : **`{str(e)}`\n\n"
+                        "**Status : **`BAD`\n"
+                        f"**Reason : **`{str(e)}`\n"
                     )
                     continue
             name = f.get("name")
             mimeType = f.get("mimeType")
             if mimeType == "application/vnd.google-apps.folder":
-                status = "[FOLDER - DELETE]"
+                status = "FOLDER - DELETION"
             else:
-                status = "[FILE - DELETE]"
+                status = "FILE - DELETION"
             try:
                 service.files().delete(fileId=f_id, supportsAllDrives=True).execute()
             except HttpError as e:
-                status.replace("DELETE]", "ERROR]")
+                status.replace("DELETE", "ERROR")
                 reply += (
                     f"**{status}**\n\n"
-                    "**Status : **`BAD`"
+                    "**Status : **`BAD`\n"
                     f"**Reason : **`{str(e)}`\n\n"
                 )
                 continue
             else:
-                reply += f"**{status}**\n\n" f"`{name}`\n" "**Status : **`OK`\n\n"
+                reply += f"**{status}**\n\n" f"**Name : **`{name}`\n" "**Status : **`OK`\n\n"
         elif exe == "chck":
             """ - Check file/folder if exists - """
             try:
@@ -906,7 +916,7 @@ async def google_drive_managers(gdrive):
                     f = await get_information(service, f_id)
                 except Exception as e:
                     reply += (
-                        "**[FILE/FOLDER - ERROR]**\n\n"
+                        "**FILE/FOLDER - ERROR**\n\n"
                         "**Status : **`BAD`\n"
                         f"**Reason : **`{str(e)}`\n\n"
                     )
