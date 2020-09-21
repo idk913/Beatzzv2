@@ -18,7 +18,6 @@
 """ - Catuserbot Google Drive managers  ported from Projectbish- """
 import asyncio
 import base64
-import io
 import json
 import logging
 import math
@@ -30,16 +29,14 @@ from datetime import datetime
 from mimetypes import guess_type
 from os.path import getctime, isdir, isfile, join
 
-import requests
-from bs4 import BeautifulSoup
 from google.auth.transport.requests import Request
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
-from googleapiclient.http import MediaFileUpload, MediaIoBaseDownload
+from googleapiclient.http import MediaFileUpload
 from telethon import events
 
-from ..utils import admin_cmd, human_to_bytes, humanbytes, time_formatter
+from ..utils import admin_cmd, humanbytes, time_formatter
 from . import (
     BOTLOG_CHATID,
     CMD_HELP,
@@ -344,54 +341,70 @@ async def download(gdrive, service, uri=None):
         )
         return reply
     return
-    
+
+
 async def list_drive_dir(service, file_id):
-        query = f"'{file_id}' in parents and (name contains '*')"
-        fields = 'nextPageToken, files(id, name, mimeType)'
-        page_token = None
-        page_size = 100
-        files = []
-        while True:
-            response = service.files().list(supportsTeamDrives=True,
-                                                  includeTeamDriveItems=True,
-                                                  q=query, spaces='drive',
-                                                  fields=fields, pageToken=page_token,
-                                                  pageSize=page_size, corpora='allDrives',
-                                                  orderBy='folder, name').execute()
-            files.extend(response.get('files', []))
-            page_token = response.get('nextPageToken', None)
-            if page_token is None:
-                break
-            if self._is_canceled:
-                raise ProcessCanceled
-        return files   
-    
-async def copy_file(service , file_id , dir_id):
-        body = {}
-        if parent_id:
-            body["parents"] = [parent_id]
-        drive_file = service.files().copy(
-            body=body, fileId=file_id, supportsTeamDrives=True).execute()
-        return drive_file['id'] 
-    
-async def copy_dir(service , file_id, dir_id):
-        files = await list_drive_dir(service, file_id)
-        if len(files) == 0:
-            return parent_id
-        new_id = None
-        for file in files:
-            if file['mimeType'] == "application/vnd.google-apps.folder":
-                dir_id = await create_dir(service, file['name'])
-                new_id = await copy_dir(service , file['id'], dir_id)
-            else:
-                await copy_file(service , file['id'], dir_id)
-                await asyncio.sleep(0.5)
-                new_id = dir_id
-        return new_id
-    
+    query = f"'{file_id}' in parents and (name contains '*')"
+    fields = "nextPageToken, files(id, name, mimeType)"
+    page_token = None
+    page_size = 100
+    files = []
+    while True:
+        response = (
+            service.files()
+            .list(
+                supportsTeamDrives=True,
+                includeTeamDriveItems=True,
+                q=query,
+                spaces="drive",
+                fields=fields,
+                pageToken=page_token,
+                pageSize=page_size,
+                corpora="allDrives",
+                orderBy="folder, name",
+            )
+            .execute()
+        )
+        files.extend(response.get("files", []))
+        page_token = response.get("nextPageToken", None)
+        if page_token is None:
+            break
+        if self._is_canceled:
+            raise ProcessCanceled
+    return files
+
+
+async def copy_file(service, file_id, dir_id):
+    body = {}
+    if parent_id:
+        body["parents"] = [parent_id]
+    drive_file = (
+        service.files()
+        .copy(body=body, fileId=file_id, supportsTeamDrives=True)
+        .execute()
+    )
+    return drive_file["id"]
+
+
+async def copy_dir(service, file_id, dir_id):
+    files = await list_drive_dir(service, file_id)
+    if len(files) == 0:
+        return parent_id
+    new_id = None
+    for file in files:
+        if file["mimeType"] == "application/vnd.google-apps.folder":
+            dir_id = await create_dir(service, file["name"])
+            new_id = await copy_dir(service, file["id"], dir_id)
+        else:
+            await copy_file(service, file["id"], dir_id)
+            await asyncio.sleep(0.5)
+            new_id = dir_id
+    return new_id
+
+
 async def download_gdrive(gdrive, service, uri):
     reply = ""
-    start = datetime.now()
+    datetime.now()
     global is_cancelled
     """ - remove drivesdk and export=download from link - """
     if "&export=download" in uri:
@@ -415,18 +428,23 @@ async def download_gdrive(gdrive, service, uri):
                     """ - if error parse in url, assume given value is Id - """
                     file_Id = uri
     try:
-        file = service.files().get(fileId=file_id, fields="name, mimeType", supportsTeamDrives=True).execute()
+        file = (
+            service.files()
+            .get(fileId=file_id, fields="name, mimeType", supportsTeamDrives=True)
+            .execute()
+        )
         if file["mimeType"] == "application/vnd.google-apps.folder":
-            dir_id = await create_dir(service , file["name"])
-            gcopycat =await  copy_dir(service , file_id, dir_id)
+            dir_id = await create_dir(service, file["name"])
+            gcopycat = await copy_dir(service, file_id, dir_id)
             ret_id = gcopycat
         else:
-            ret_id = await copy_file(service , file_id, file_Id)
+            ret_id = await copy_file(service, file_id, file_Id)
         reply = f"id = `{ret_id}`"
     except HttpError as e:
         reply = f"**Error : **{str(e)}"
     return reply
-    
+
+
 async def change_permission(service, Id):
     permission = {"role": "reader", "type": "anyone"}
     try:
