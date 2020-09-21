@@ -376,6 +376,8 @@ async def download_gdrive(gdrive, service, uri):
     try:
         file = await get_information(service, file_Id)
     except HttpError as e:
+        from . import LOGS
+        LOGS.info(str(e))
         if "404" in str(e):
             drive = "https://drive.google.com"
             url = f"{drive}/uc?export=download&id={file_Id}"
