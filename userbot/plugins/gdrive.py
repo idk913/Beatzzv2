@@ -730,7 +730,7 @@ async def lists(gdrive):
                 name = checker
                 query = f"name contains '{name}'"
     else:
-        query = ""
+        query = parent_Id
     service = await create_app(gdrive)
     if service is False:
         return False
