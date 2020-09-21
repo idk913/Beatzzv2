@@ -501,11 +501,11 @@ async def get_information(service, Id):
 
 
 async def create_dir(service, folder_name, dir_id=None):
-    if not dir_id:
-        metadata = {
+    metadata = {
             "name": folder_name,
             "mimeType": "application/vnd.google-apps.folder",
         }
+    if not dir_id:
         try:
             if parent_Id is not None:
                 pass
