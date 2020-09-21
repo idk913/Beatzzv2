@@ -220,7 +220,17 @@ async def get_mimeType(name):
         mimeType = "text/plain"
     return mimeType
 
-
+async def get_file_id(input_str):
+        link = input_str
+        found = GDRIVE_ID.search(link)
+        if found and 'folder' in link:
+            out = (found.group(1), "folder")
+        elif found:
+            out = (found.group(1), "file")
+        else:
+            out = (link, "unknown")
+        return out
+    
 async def download(gdrive, service, uri=None):
     start = datetime.now()
     global is_cancelled
@@ -427,6 +437,7 @@ async def download_gdrive(gdrive, service, uri):
                 except IndexError:
                     """ - if error parse in url, assume given value is Id - """
                     file_Id = uri
+    file_Id , _ = await get_file_id(file_Id)
     try:
         file = (
             service.files()
