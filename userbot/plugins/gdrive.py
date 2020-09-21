@@ -816,11 +816,11 @@ async def google_drive_managers(gdrive):
         # ported from userge
         found = GDRIVE_ID.search(name_or_id)
         if found and "folder" in name_or_id:
-            name_or_id = (found.group(1), "folder")
+            name_or_id , _ = (found.group(1), "folder")
         elif found:
-            name_or_id = (found.group(1), "file")
+            name_or_id , _= (found.group(1), "file")
         else:
-            name_or_id = (link, "unknown")
+            name_or_id , _ = (name_or_id, "unknown")
         metadata = {
             "name": name_or_id,
             "mimeType": "application/vnd.google-apps.folder",
