@@ -711,6 +711,7 @@ async def lists(gdrive):
     if checker != "":
         if checker.startswith("-p"):
             parents = checker.split(None, 2)[1]
+            parents = parents.split("/")[-1]
             try:
                 name = checker.split(None, 2)[2]
             except IndexError:
