@@ -434,7 +434,7 @@ async def download_gdrive(gdrive, service, uri):
             .execute()
         )
         if file["mimeType"] == "application/vnd.google-apps.folder":
-            dir_id = await create_dir(service, file["name"])
+            await create_dir(service, file["name"])
             gcopycat = await copy_dir(service, file_Id, parent_Id)
             ret_id = gcopycat
         else:
