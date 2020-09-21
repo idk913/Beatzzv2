@@ -46,6 +46,11 @@ download_path = os.getcwd() + TMP_DOWNLOAD_DIRECTORY.strip(".")
 
 aria2.set_global_options({"dir": download_path})
 
+async def check_metadata(gid):
+    file = aria2.get_download(gid)
+    new_gid = file.followed_by_ids[0]
+    LOGS.info("Changing GID " + gid + " to" + new_gid)
+    return new_gid
 
 @bot.on(admin_cmd(pattern=r"fromurl(?: |$)(.*)"))
 async def aurl_download(event):
@@ -167,13 +172,6 @@ async def show_all(event):
             allow_cache=False,
             reply_to=event.message.id,
         )
-
-
-async def check_metadata(gid):
-    file = aria2.get_download(gid)
-    new_gid = file.followed_by_ids[0]
-    LOGS.info("Changing GID " + gid + " to" + new_gid)
-    return new_gid
 
 
 async def check_progress_for_dl(gid, event, previous):
