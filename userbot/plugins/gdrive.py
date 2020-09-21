@@ -694,8 +694,6 @@ async def reset_parentId():
         del parent_Id
     return
 
-
-@bot.on(admin_cmd(pattern=r"glist(?: |$)(-l \d+)?(?: |$)?(.*)?(?: |$)", outgoing=True))
 async def lists(gdrive):
     await gdrive.edit("`Getting information...`")
     checker = gdrive.pattern_match.group(1)
@@ -804,6 +802,10 @@ async def lists(gdrive):
     return
 
 
+@bot.on(admin_cmd(pattern=r"glist(?: |$)(-l \d+)?(?: |$)?(.*)?(?: |$)", outgoing=True))
+async def catlists(gdrive):
+    await lists(gdrive)
+    
 @bot.on(admin_cmd(pattern="gdf (mkdir|rm|chck) (.*)", outgoing=True))
 async def google_drive_managers(gdrive):
     """ - Google Drive folder/file management - """
