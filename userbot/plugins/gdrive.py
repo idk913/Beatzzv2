@@ -37,6 +37,7 @@ from googleapiclient.http import MediaFileUpload
 from telethon import events
 
 from ..utils import admin_cmd, humanbytes, time_formatter
+from ..utils import edit_or_reply, sudo_cmd
 from . import (
     BOTLOG_CHATID,
     CMD_HELP,
@@ -114,6 +115,7 @@ GDRIVE_ID = re.compile(
 
 
 @bot.on(admin_cmd(pattern="gauth(?: |$)", outgoing=True))
+@bot.on(sudo_cmd(pattern="gauth(?: |$)", allow_sudo=True))
 async def generate_credentials(gdrive):
     """ - Only generate once for long run - """
     if helper.get_credentials(str(gdrive.from_id)) is not None:
@@ -198,6 +200,7 @@ async def create_app(gdrive):
 
 
 @bot.on(admin_cmd(pattern="greset(?: |$)", outgoing=True))
+@bot.on(sudo_cmd(pattern="greset(?: |$)", allow_sudo=True))
 async def reset_credentials(gdrive):
     """ - Reset credentials or change account - """
     await gdrive.edit("`Resetting information...`")
@@ -754,11 +757,13 @@ async def lists(gdrive):
 
 
 @bot.on(admin_cmd(pattern=r"glist(?: |$)(-l \d+)?(?: |$)?(.*)?(?: |$)", outgoing=True))
+@bot.on(sudo_cmd(pattern="glist(?: |$)(-l \d+)?(?: |$)?(.*)?(?: |$)", allow_sudo=True))
 async def catlists(gdrive):
     await lists(gdrive)
 
 
 @bot.on(admin_cmd(pattern="gdf (mkdir|rm|chck) (.*)", outgoing=True))
+@bot.on(sudo_cmd(pattern="gdf (mkdir|rm|chck) (.*)", allow_sudo=True))
 async def google_drive_managers(gdrive):
     """ - Google Drive folder/file management - """
     await gdrive.edit("`Sending information...`")
@@ -916,6 +921,7 @@ async def google_drive_managers(gdrive):
 
 
 @bot.on(admin_cmd(pattern="gabort(?: |$)", outgoing=True))
+@bot.on(sudo_cmd(pattern="gabort(?: |$)", allow_sudo=True))
 async def cancel_process(gdrive):
     """
     Abort process for download and upload
@@ -932,6 +938,7 @@ async def cancel_process(gdrive):
 
 
 @bot.on(admin_cmd(pattern="ugd(?: |$)(.*)", outgoing=True))
+@bot.on(sudo_cmd(pattern="ugd(?: |$)(.*)", allow_sudo=True))
 async def google_drive(gdrive):
     reply = ""
     """ - Parsing all google drive function - """
@@ -1108,6 +1115,7 @@ async def google_drive(gdrive):
 
 
 @bot.on(admin_cmd(pattern="(gdfset|gdfclear)(?: |$)(.*)", outgoing=True))
+@bot.on(sudo_cmd(pattern="(gdfset|gdfclear)(?: |$)(.*)", allow_sudo=True))
 async def set_upload_folder(gdrive):
     """ - Set parents dir for upload/check/makedir/remove - """
     await gdrive.edit("`Sending information...`")
