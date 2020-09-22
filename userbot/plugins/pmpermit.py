@@ -154,7 +154,7 @@ if Var.PRIVATE_GROUP_ID is not None:
             reply = await event.get_reply_message()
             replied_user = await event.client.get_entity(reply.from_id)
             firstname = str(replied_user.first_name)
-            await event.client(UnblockRequest(replied_user.id))
+            await event.client(functions.contacts.UnblockRequest(chat.id))
             await event.edit(
                 "You have been unblocked. Now You Can Message Me..[{}](tg://user?id={})".format(
                     firstname, chat.id
