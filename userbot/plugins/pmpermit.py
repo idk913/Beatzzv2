@@ -13,11 +13,7 @@ PM_WARNS = {}
 PREV_REPLY_MESSAGE = {}
 CACHE = {}
 PMPERMIT_PIC = Config.PMPERMIT_PIC
-DEFAULTUSER = (
-    str(ALIVE_NAME)
-    if ALIVE_NAME
-    else "cat"
-)
+DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else "cat"
 USER_BOT_WARN_ZERO = "`You were spamming my peru master's inbox, henceforth you are blocked by my master's userbot.` **Now GTFO, i'm playing minecraft** "
 
 if Var.PRIVATE_GROUP_ID is not None:
@@ -45,7 +41,9 @@ if Var.PRIVATE_GROUP_ID is not None:
                 await event.delete()
             else:
                 await event.edit(
-                    "[{}](tg://user?id={}) is already in approved list".format(firstname, chat.id)
+                    "[{}](tg://user?id={}) is already in approved list".format(
+                        firstname, chat.id
+                    )
                 )
                 await asyncio.sleep(3)
                 await event.delete()
@@ -69,7 +67,9 @@ if Var.PRIVATE_GROUP_ID is not None:
                 await event.delete()
             else:
                 await event.edit(
-                    "[{}](tg://user?id={}) is already in approved list".format(firstname, chat)
+                    "[{}](tg://user?id={}) is already in approved list".format(
+                        firstname, chat
+                    )
                 )
                 await asyncio.sleep(3)
                 await event.delete()
@@ -79,7 +79,7 @@ if Var.PRIVATE_GROUP_ID is not None:
         if event.fwd_from:
             return
         chat = await event.get_chat()
-        if event.text.startswith((".bloack",".disapprove")):
+        if event.text.startswith((".bloack", ".disapprove")):
             return
         if event.is_private:
             if not pmpermit_sql.is_approved(chat.id):
@@ -102,7 +102,9 @@ if Var.PRIVATE_GROUP_ID is not None:
                 )
             else:
                 await event.edit(
-                    "[{}](tg://user?id={}) is not yet approved".format(firstname, chat.id)
+                    "[{}](tg://user?id={}) is not yet approved".format(
+                        firstname, chat.id
+                    )
                 )
         else:
             reply = await event.get_reply_message()
@@ -115,10 +117,10 @@ if Var.PRIVATE_GROUP_ID is not None:
                 )
             else:
                 await event.edit(
-                    "[{}](tg://user?id={}) is not yet approved".format(firstname, chat.id)
+                    "[{}](tg://user?id={}) is not yet approved".format(
+                        firstname, chat.id
+                    )
                 )
-            
-            
 
     @borg.on(admin_cmd(pattern="block ?(.*)"))
     async def block_p_m(event):
@@ -130,22 +132,22 @@ if Var.PRIVATE_GROUP_ID is not None:
         chat = await event.get_chat()
         if event.is_private:
             await event.edit(
-                    " ███████▄▄███████████▄  \n▓▓▓▓▓▓█░░░░░░░░░░░░░░█\n▓▓▓▓▓▓█░░░░░░░░░░░░░░█\n▓▓▓▓▓▓█░░░░░░░░░░░░░░█\n▓▓▓▓▓▓█░░░░░░░░░░░░░░█\n▓▓▓▓▓▓█░░░░░░░░░░░░░░█\n▓▓▓▓▓▓███░░░░░░░░░░░░█\n██████▀▀▀█░░░░██████▀  \n░░░░░░░░░█░░░░█  \n░░░░░░░░░░█░░░█  \n░░░░░░░░░░░█░░█  \n░░░░░░░░░░░█░░█  \n░░░░░░░░░░░░▀▀ \n\nYou have been blocked. Now You Can't Message Me..[{}](tg://user?id={})".format(
-                        firstname, chat.id
-                    )
+                " ███████▄▄███████████▄  \n▓▓▓▓▓▓█░░░░░░░░░░░░░░█\n▓▓▓▓▓▓█░░░░░░░░░░░░░░█\n▓▓▓▓▓▓█░░░░░░░░░░░░░░█\n▓▓▓▓▓▓█░░░░░░░░░░░░░░█\n▓▓▓▓▓▓█░░░░░░░░░░░░░░█\n▓▓▓▓▓▓███░░░░░░░░░░░░█\n██████▀▀▀█░░░░██████▀  \n░░░░░░░░░█░░░░█  \n░░░░░░░░░░█░░░█  \n░░░░░░░░░░░█░░█  \n░░░░░░░░░░░█░░█  \n░░░░░░░░░░░░▀▀ \n\nYou have been blocked. Now You Can't Message Me..[{}](tg://user?id={})".format(
+                    firstname, chat.id
                 )
+            )
             await event.client(functions.contacts.BlockRequest(chat.id))
         else:
             reply = await event.get_reply_message()
             chat = await event.client.get_entity(reply.from_id)
-            firstname = str(chat.first_name)  
+            firstname = str(chat.first_name)
             await event.edit(
-                    " ███████▄▄███████████▄  \n▓▓▓▓▓▓█░░░░░░░░░░░░░░█\n▓▓▓▓▓▓█░░░░░░░░░░░░░░█\n▓▓▓▓▓▓█░░░░░░░░░░░░░░█\n▓▓▓▓▓▓█░░░░░░░░░░░░░░█\n▓▓▓▓▓▓█░░░░░░░░░░░░░░█\n▓▓▓▓▓▓███░░░░░░░░░░░░█\n██████▀▀▀█░░░░██████▀  \n░░░░░░░░░█░░░░█  \n░░░░░░░░░░█░░░█  \n░░░░░░░░░░░█░░█  \n░░░░░░░░░░░█░░█  \n░░░░░░░░░░░░▀▀ \n\nYou have been blocked. Now You Can't Message Me..[{}](tg://user?id={})".format(
-                        firstname, chat.id
-                    )
+                " ███████▄▄███████████▄  \n▓▓▓▓▓▓█░░░░░░░░░░░░░░█\n▓▓▓▓▓▓█░░░░░░░░░░░░░░█\n▓▓▓▓▓▓█░░░░░░░░░░░░░░█\n▓▓▓▓▓▓█░░░░░░░░░░░░░░█\n▓▓▓▓▓▓█░░░░░░░░░░░░░░█\n▓▓▓▓▓▓███░░░░░░░░░░░░█\n██████▀▀▀█░░░░██████▀  \n░░░░░░░░░█░░░░█  \n░░░░░░░░░░█░░░█  \n░░░░░░░░░░░█░░█  \n░░░░░░░░░░░█░░█  \n░░░░░░░░░░░░▀▀ \n\nYou have been blocked. Now You Can't Message Me..[{}](tg://user?id={})".format(
+                    firstname, chat.id
                 )
+            )
             await event.client(functions.contacts.BlockRequest(chat.id))
-            
+
     @borg.on(admin_cmd(pattern="listapproved$"))
     async def approve_p_m(event):
         if event.fwd_from:
