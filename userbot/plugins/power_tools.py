@@ -1,13 +1,5 @@
-"""Restart or Terminate the bot from any chat
-Available Commands:
-.restart
-.shutdown"""
 import sys
 from asyncio import sleep
-
-# This Source Code Form is subject to the terms of the GNU
-# General Public License, v.3.0. If a copy of the GPL was not distributed with this
-# file, You can obtain one at https://www.gnu.org/licenses/gpl-3.0.en.html
 from os import execl
 
 from ..utils import admin_cmd, edit_or_reply, sudo_cmd
@@ -43,7 +35,6 @@ async def _(event):
 @borg.on(admin_cmd(pattern="sleep( [0-9]+)?$"))
 @borg.on(sudo_cmd(pattern="sleep( [0-9]+)?$", allow_sudo=True))
 async def _(event):
-    event.text
     if " " not in event.pattern_match.group(1):
         return await edit_or_reply(event, "Syntax: `.sleep time`")
     counter = int(event.pattern_match.group(1))
