@@ -161,5 +161,5 @@ CMD_HELP.update(
         \n**Usage : **Get latest recovery MIUI\
         \n\n**Syntax :** `.of` (codename)\
         \n**Usage : **Get latest ORangeFox Recovery"
-            }
+    }
 )
