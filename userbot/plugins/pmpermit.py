@@ -22,11 +22,11 @@ if Var.PRIVATE_GROUP_ID is not None:
     async def approve_p_m(event):
         if event.fwd_from:
             return
-        replied_user = await event.client(GetFullUserRequest(event.chat_id))
-        firstname = replied_user.user.first_name
-        reason = event.pattern_match.group(1)
-        chat = await event.get_chat()
         if event.is_private:
+            replied_user = await event.client(GetFullUserRequest(event.chat_id))
+            firstname = replied_user.user.first_name
+            reason = event.pattern_match.group(1)
+            chat = await event.get_chat()
             if not pmpermit_sql.is_approved(chat.id):
                 if chat.id in PM_WARNS:
                     del PM_WARNS[chat.id]
@@ -47,8 +47,8 @@ if Var.PRIVATE_GROUP_ID is not None:
                 )
                 await asyncio.sleep(3)
                 await event.delete()
-            chat = chat.id
-        if apprvpm.reply_to_msg_id:
+            return
+        if event.reply_to_msg_id:
             reply = await event.get_reply_message()
             replied_user = await event.client.get_entity(reply.from_id)
             chat = replied_user.id
@@ -90,11 +90,11 @@ if Var.PRIVATE_GROUP_ID is not None:
     async def disapprove_p_m(event):
         if event.fwd_from:
             return
-        replied_user = await event.client(GetFullUserRequest(event.chat_id))
-        firstname = replied_user.user.first_name
-        event.pattern_match.group(1)
-        chat = await event.get_chat()
         if event.is_private:
+            replied_user = await event.client(GetFullUserRequest(event.chat_id))
+            firstname = replied_user.user.first_name
+            event.pattern_match.group(1)
+            chat = await event.get_chat()
             if pmpermit_sql.is_approved(chat.id):
                 pmpermit_sql.disapprove(chat.id)
                 await event.edit(
@@ -106,7 +106,8 @@ if Var.PRIVATE_GROUP_ID is not None:
                         firstname, chat.id
                     )
                 )
-        else:
+            return
+        if event.reply_to_msg_id:
             reply = await event.get_reply_message()
             chat = await event.client.get_entity(reply.from_id)
             firstname = str(chat.first_name)
@@ -126,18 +127,18 @@ if Var.PRIVATE_GROUP_ID is not None:
     async def block_p_m(event):
         if event.fwd_from:
             return
-        replied_user = await event.client(GetFullUserRequest(event.chat_id))
-        firstname = replied_user.user.first_name
-        event.pattern_match.group(1)
-        chat = await event.get_chat()
         if event.is_private:
+            replied_user = await event.client(GetFullUserRequest(event.chat_id))
+            firstname = replied_user.user.first_name
+            chat = await event.get_chat()
             await event.edit(
                 " ███████▄▄███████████▄  \n▓▓▓▓▓▓█░░░░░░░░░░░░░░█\n▓▓▓▓▓▓█░░░░░░░░░░░░░░█\n▓▓▓▓▓▓█░░░░░░░░░░░░░░█\n▓▓▓▓▓▓█░░░░░░░░░░░░░░█\n▓▓▓▓▓▓█░░░░░░░░░░░░░░█\n▓▓▓▓▓▓███░░░░░░░░░░░░█\n██████▀▀▀█░░░░██████▀  \n░░░░░░░░░█░░░░█  \n░░░░░░░░░░█░░░█  \n░░░░░░░░░░░█░░█  \n░░░░░░░░░░░█░░█  \n░░░░░░░░░░░░▀▀ \n\nYou have been blocked. Now You Can't Message Me..[{}](tg://user?id={})".format(
                     firstname, chat.id
                 )
             )
             await event.client(functions.contacts.BlockRequest(chat.id))
-        else:
+            return
+        if event.reply_to_msg_id:
             reply = await event.get_reply_message()
             chat = await event.client.get_entity(reply.from_id)
             firstname = str(chat.first_name)
