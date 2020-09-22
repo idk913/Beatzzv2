@@ -147,7 +147,7 @@ if Var.PRIVATE_GROUP_ID is not None:
                 )
             )
             await event.client(functions.contacts.BlockRequest(chat.id))
-            
+
     @borg.on(admin_cmd(pattern="unblock$"))
     async def unblock_pm(event):
         if event.reply_to_msg_id:
@@ -155,7 +155,11 @@ if Var.PRIVATE_GROUP_ID is not None:
             replied_user = await event.client.get_entity(reply.from_id)
             firstname = str(replied_user.first_name)
             await unblock.client(UnblockRequest(replied_user.id))
-            await event.edit("You have been unblocked. Now You Can Message Me..[{}](tg://user?id={})".format(firstname, chat.id))
+            await event.edit(
+                "You have been unblocked. Now You Can Message Me..[{}](tg://user?id={})".format(
+                    firstname, chat.id
+                )
+            )
 
     @borg.on(admin_cmd(pattern="listapproved$"))
     async def approve_p_m(event):
