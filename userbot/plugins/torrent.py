@@ -14,7 +14,7 @@ import aria2p
 from requests import get
 
 from ..utils import admin_cmd, humanbytes
-from . import CMD_HELP, LOGS, TMP_DOWNLOAD_DIRECTORY
+from . import CMD_HELP, LOGS, TMP_DOWNLOAD_DIRECTORY,bot
 
 
 def subprocess_run(cmd):
