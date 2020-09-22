@@ -22,10 +22,10 @@ if Var.PRIVATE_GROUP_ID is not None:
     async def approve_p_m(event):
         if event.fwd_from:
             return
+        reason = event.pattern_match.group(1)
         if event.is_private:
             replied_user = await event.client(GetFullUserRequest(event.chat_id))
             firstname = replied_user.user.first_name
-            reason = event.pattern_match.group(1)
             chat = await event.get_chat()
             if not pmpermit_sql.is_approved(chat.id):
                 if chat.id in PM_WARNS:
@@ -93,7 +93,6 @@ if Var.PRIVATE_GROUP_ID is not None:
         if event.is_private:
             replied_user = await event.client(GetFullUserRequest(event.chat_id))
             firstname = replied_user.user.first_name
-            event.pattern_match.group(1)
             chat = await event.get_chat()
             if pmpermit_sql.is_approved(chat.id):
                 pmpermit_sql.disapprove(chat.id)
