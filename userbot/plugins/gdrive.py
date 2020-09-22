@@ -36,7 +36,7 @@ from googleapiclient.errors import HttpError
 from googleapiclient.http import MediaFileUpload
 from telethon import events
 
-from ..utils import admin_cmd, humanbytes, sudo_cmd, time_formatter
+from ..utils import admin_cmd, humanbytes, sudo_cmd, time_formatter,edit_or_reply
 from . import (
     BOTLOG_CHATID,
     CMD_HELP,
@@ -118,7 +118,7 @@ GDRIVE_ID = re.compile(
 async def generate_credentials(gdrive):
     """ - Only generate once for long run - """
     if helper.get_credentials(str(gdrive.from_id)) is not None:
-        await gdrive.edit("`You already authorized token...`")
+        await edit_or_reply(gdrive,"`You already authorized token...`")
         await asyncio.sleep(1.5)
         await gdrive.delete()
         return False
@@ -127,20 +127,19 @@ async def generate_credentials(gdrive):
         try:
             configs = json.loads(G_DRIVE_DATA)
         except json.JSONDecodeError:
-            await gdrive.edit(
-                "`[AUTHENTICATE - ERROR]`\n\n"
-                "`Status` : **BAD**\n"
-                "`Reason` : **G_DRIVE_DATA** entity is not valid!"
+            await edit_or_reply(gdrive,
+                "**AUTHENTICATE - ERROR**\n\n"
+                "**Status : **`BAD`\n"
+                "**Reason : **`G_DRIVE_DATA entity is not valid!`"
             )
             return False
     else:
         """ - Only for old user - """
         if G_DRIVE_CLIENT_ID is None and G_DRIVE_CLIENT_SECRET is None:
-            await gdrive.edit(
-                "`[AUTHENTICATE - ERROR]`\n\n"
-                "`Status` : **BAD**\n"
-                "`Reason` : please get your **G_DRIVE_DATA** "
-                "[here](https://telegra.ph/How-To-Setup-Google-Drive-04-03)"
+            await edit_or_reply(gdrive,
+                "**AUTHENTICATE - ERROR**\n\n"
+                "**Status : **`BAD`\n"
+                "**Reason : **`please get your G_DRIVE_DATA`"
             )
             return False
         configs = {
@@ -151,7 +150,7 @@ async def generate_credentials(gdrive):
                 "token_uri": GOOGLE_TOKEN_URI,
             }
         }
-    await gdrive.edit("`Creating credentials...`")
+    gdrive = await edit_or_reply(gdrive,"`Creating credentials...`")
     flow = InstalledAppFlow.from_client_config(
         configs, SCOPES, redirect_uri=REDIRECT_URI
     )
@@ -202,7 +201,7 @@ async def create_app(gdrive):
 @bot.on(sudo_cmd(pattern="greset(?: |$)", allow_sudo=True))
 async def reset_credentials(gdrive):
     """ - Reset credentials or change account - """
-    await gdrive.edit("`Resetting information...`")
+    gdrive = await edit_or_reply(gdrive , "`Resetting information...`")
     helper.clear_credentials(str(gdrive.from_id))
     await gdrive.edit("`Done...`")
     await asyncio.sleep(1)
@@ -235,7 +234,7 @@ async def get_file_id(input_str):
     return out
 
 
-async def download(gdrive, service, uri=None):
+async def download(event , gdrive, service, uri=None):
     start = datetime.now()
     global is_cancelled
     reply = ""
@@ -267,8 +266,8 @@ async def download(gdrive, service, uri=None):
         try:
             current_time = time.time()
             is_cancelled = False
-            downloaded_file_name = await gdrive.client.download_media(
-                await gdrive.get_reply_message(),
+            downloaded_file_name = await event.client.download_media(
+                await event.get_reply_message(),
                 TMP_DOWNLOAD_DIRECTORY,
                 progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
                     progress(
@@ -289,8 +288,8 @@ async def download(gdrive, service, uri=None):
             newest = max(names, key=getctime)
             os.remove(newest)
             reply += (
-                "`[FILE - CANCELLED]`\n\n"
-                "`Status` : **OK** - received signal cancelled."
+                "**FILE - CANCELLED**\n\n"
+                "**Status : **`OK - received signal cancelled.`"
             )
             return reply
         else:
@@ -298,7 +297,7 @@ async def download(gdrive, service, uri=None):
     try:
         file_name = await get_raw_name(required_file_name)
     except AttributeError:
-        reply += "`[ENTRY - ERROR]`\n\n" "`Status` : **BAD**\n"
+        reply += "**[ENTRY - ERROR]**\n\n" "**Status : **`BAD`\n"
         return reply
     mimeType = await get_mimeType(required_file_name)
     try:
@@ -465,7 +464,7 @@ async def download_gdrive(gdrive, service, uri):
             end = datetime.now()
             ms = (end - start).seconds
             reply = (
-                f"**Folder successfully copied in** `{ms} seconds`"
+                f"**Folder successfully copied in** `{ms} seconds`\n\n"
                 f"**Link : **[{file['name']}]({folder['webViewLink']})"
             )
         else:
@@ -473,7 +472,7 @@ async def download_gdrive(gdrive, service, uri):
             end = datetime.now()
             ms = (end - start).seconds
             reply = (
-                f"**File successfully copied in** `{ms} seconds`"
+                f"**File successfully copied in** `{ms} seconds`\n\n"
                 f"**Link : **[link](https://drive.google.com/open?id={ret_id})"
             )
     except HttpError as e:
@@ -651,10 +650,10 @@ async def lists(gdrive):
     if checker is not None:
         page_size = int(gdrive.pattern_match.group(1).strip("-l "))
         if page_size > 1000:
-            await gdrive.edit(
-                "`[GDRIVE - LIST]`\n\n"
-                "`Status` : **BAD**\n"
-                "`Reason` : can't get list if limit more than 1000."
+            await edit_or_reply(gdrive , 
+                "**GDRIVE - LIST**\n\n"
+                "**Status : **`BAD`\n"
+                "**Reason : **`can't get list if limit more than 1000.`"
             )
             return
     else:
@@ -713,7 +712,7 @@ async def lists(gdrive):
                 .execute()
             )
         except HttpError as e:
-            await gdrive.edit(
+            await edit_or_reply(gdrive , 
                 "**[GDRIVE - LIST]**\n\n"
                 "**Status : **`BAD`\n"
                 f"**Reason : **`{str(e)}`"
@@ -742,14 +741,15 @@ async def lists(gdrive):
     if query == "":
         query = "Not specified"
     if len(message) > 4096:
-        await gdrive.edit("`Result is too big, sending it as file...`")
+        event = gdrive
+        gdrive = await edit_or_reply(gdrive ,"`Result is too big, sending it as file...`")
         with open("result.txt", "w") as r:
             r.write(f"Google Drive Query:\n{query}\n\nResults\n\n{message}")
-        await gdrive.client.send_file(
-            gdrive.chat_id, "result.txt", caption="Google Drive Query List."
+        await event.client.send_file(
+            event.chat_id, "result.await edit_or_reply(gdrive ,txt", caption="Google Drive Query List."
         )
     else:
-        await gdrive.edit(
+        await edit_or_reply(gdrive , 
             "**Google Drive Query**:\n" f"`{query}`\n\n**Results**\n\n{message}"
         )
     return
@@ -765,13 +765,13 @@ async def catlists(gdrive):
 @bot.on(sudo_cmd(pattern="gdf (mkdir|rm|chck) (.*)", allow_sudo=True))
 async def google_drive_managers(gdrive):
     """ - Google Drive folder/file management - """
-    await gdrive.edit("`Sending information...`")
     service = await create_app(gdrive)
     if service is False:
         return None
     """ - Split name if contains spaces by using ; - """
     f_name = gdrive.pattern_match.group(2).split(";")
     exe = gdrive.pattern_match.group(1)
+    gdrive = await edit_or_reply(gdrive , "`Sending information...`")
     reply = ""
     for name_or_id in f_name:
         """ - in case given name has a space beetween ; - """
@@ -916,7 +916,6 @@ async def google_drive_managers(gdrive):
             reply += msg
         page_token = result.get("nextPageToken", None)
     await gdrive.edit(reply)
-    return
 
 
 @bot.on(admin_cmd(pattern="gabort(?: |$)", outgoing=True))
@@ -927,7 +926,7 @@ async def cancel_process(gdrive):
     """
     global is_cancelled
     downloads = aria2.get_downloads()
-    await gdrive.edit("`Cancelling...`")
+    gdrive = await edit_or_reply(gdrive , "`Cancelling...`")
     if len(downloads) != 0:
         aria2.remove_all(force=True)
         aria2.autopurge()
@@ -946,15 +945,17 @@ async def google_drive(gdrive):
     file_path = None
     uri = None
     if not value and not gdrive.reply_to_msg_id:
-        return await gdrive.edit("`What should i Do You idiot`")
+        return await edit_or_reply(gdrive ,"`What should i Do You idiot`")
     elif value and gdrive.reply_to_msg_id:
-        await gdrive.edit(
+        await edit_or_reply(gdrive ,
             "**[UNKNOWN - ERROR]\n\n"
             "**Status : **`failed`\n"
             "**Reason : **`Confused to upload file or the replied message/media.`"
         )
         return None
     service = await create_app(gdrive)
+    event = gdrive
+    gdrive = await edit_or_reply(gdrive , "Uploading...")
     if service is False:
         return None
     if isfile(value):
@@ -972,7 +973,7 @@ async def google_drive(gdrive):
         try:
             await task_directory(gdrive, service, folder_path)
         except CancelProcess:
-            await gdrive.respond(
+            await gdrive.edit(
                 "**[FOLDER - CANCELLED]**\n\n"
                 "**Status : **`OK - received signal cancelled.`"
             )
@@ -996,8 +997,8 @@ async def google_drive(gdrive):
             )
             await reset_parentId()
             return True
-    elif not value and gdrive.reply_to_msg_id:
-        reply += await download(gdrive, service)
+    elif not value and event.reply_to_msg_id:
+        reply += await download(event, gdrive, service)
         await gdrive.edit(reply, link_preview=False)
         return None
     else:
@@ -1021,8 +1022,7 @@ async def google_drive(gdrive):
                     )
                     continue
             if reply:
-                await gdrive.respond(reply, link_preview=False)
-                await gdrive.delete()
+                await gdrive.edit (reply, link_preview=False)
                 return True
             else:
                 return None
@@ -1055,12 +1055,11 @@ async def google_drive(gdrive):
                         )
                         continue
             if reply:
-                await gdrive.respond(reply, link_preview=False)
-                await gdrive.delete()
+                await gdrive.edit(reply, link_preview=False)
                 return True
             else:
                 return None
-        if not uri and not gdrive.reply_to_msg_id:
+        if not uri and not event.reply_to_msg_id:
             await gdrive.edit(
                 "**[VALUE - ERROR]**\n\n"
                 "**Status : **`BAD`\n"
@@ -1070,10 +1069,10 @@ async def google_drive(gdrive):
                 "for upload from files/folders path this doesn't support it."
             )
             return False
-    if uri and not gdrive.reply_to_msg_id:
+    if uri and not event.reply_to_msg_id:
         for dl in uri:
             try:
-                reply += await download(gdrive, service, dl)
+                reply += await download(event,gdrive, service, dl)
             except Exception as e:
                 if " not found" in str(e) or "'file'" in str(e):
                     reply += (
@@ -1117,9 +1116,10 @@ async def google_drive(gdrive):
 @bot.on(sudo_cmd(pattern="(gdfset|gdfclear)(?: |$)(.*)", allow_sudo=True))
 async def set_upload_folder(gdrive):
     """ - Set parents dir for upload/check/makedir/remove - """
-    await gdrive.edit("`Sending information...`")
     global parent_Id
     exe = gdrive.pattern_match.group(1)
+    event = gdrive
+    gdrive = await edit_or_reply(gdrive,"`Sending information...`")
     if exe == "gdfclear":
         if G_DRIVE_FOLDER_ID is not None:
             parent_Id = G_DRIVE_FOLDER_ID
@@ -1143,7 +1143,7 @@ async def set_upload_folder(gdrive):
                     " - `G_DRIVE_FOLDER_ID empty, will use root.`"
                 )
                 return None
-    inp = gdrive.pattern_match.group(2)
+    inp = event.pattern_match.group(2)
     if not inp:
         await gdrive.edit(">`.gdfset put <folderURL/folderID>`")
         return None
