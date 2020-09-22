@@ -1,13 +1,12 @@
 import asyncio
 import os
-from asyncio import sleep
 
 import pybase64
 from telethon import functions, types
 from telethon.tl.functions.messages import ImportChatInviteRequest as Get
 
 from .. import CMD_HELP
-from ..utils import admin_cmd, edit_or_reply, sudo_cmd
+from ..utils import admin_cmd, sudo_cmd,edit_or_reply
 
 if Config.PRIVATE_GROUP_BOT_API_ID is None:
     BOTLOG = False
@@ -17,7 +16,7 @@ else:
 
 
 @borg.on(admin_cmd(pattern="spam (.*)"))
-@borg.on(sudo_cmd(pattern="spam (.*)", allow_sudo=True))
+@borg.on(sudo_cmd(pattern="spam (.*)" , allow_sudo = True))
 async def spammer(e):
     if e.fwd_from:
         return
@@ -152,9 +151,8 @@ async def spammer(e):
     else:
         await edit_or_reply(e, "try again something went wrong or check `.info spam`")
 
-
 @borg.on(admin_cmd(pattern="bigspam (.*)"))
-@borg.on(sudo_cmd(pattern="bigspam (.*)", allow_sudo=True))
+@borg.on(sudo_cmd(pattern="bigspam (.*)" , allow_sudo = True))
 async def spammer(e):
     if e.fwd_from:
         return
@@ -281,11 +279,11 @@ async def spammer(e):
                     + f"`{spam_message}`",
                 )
     else:
-        await edit_or_reply(e, "try again something went wrong or check `.info spam`")
-
+        await edit_or_reply(e , "try again something went wrong or check `.info spam`")
+        
 
 @borg.on(admin_cmd("cspam ?(.*)"))
-@borg.on(sudo_cmd(pattern="cspam (.*)", allow_sudo=True))
+@borg.on(sudo_cmd(pattern="cspam (.*)" , allow_sudo = True))
 async def tmeme(e):
     cspam = str("".join(e.text.split(maxsplit=1)[1:]))
     message = cspam.replace(" ", "")
@@ -308,7 +306,7 @@ async def tmeme(e):
 
 
 @borg.on(admin_cmd("wspam (.*)"))
-@borg.on(sudo_cmd(pattern="wspam (.*)", allow_sudo=True))
+@borg.on(sudo_cmd(pattern="wspam (.*)" , allow_sudo = True))
 async def tmeme(e):
     wspam = str("".join(e.text.split(maxsplit=1)[1:]))
     message = wspam.split()
@@ -331,7 +329,7 @@ async def tmeme(e):
 
 
 @borg.on(admin_cmd("delayspam (.*)"))
-@borg.on(sudo_cmd(pattern="delayspam (.*)", allow_sudo=True))
+@borg.on(sudo_cmd(pattern="delayspam (.*)" , allow_sudo = True))
 async def spammer(e):
     if e.fwd_from:
         return
@@ -342,7 +340,7 @@ async def spammer(e):
     await e.delete()
     for i in range(1, counter):
         await e.respond(spam_message)
-        await sleep(spamDelay)
+        await asyncio.sleep(spamDelay)
     if BOTLOG:
         if e.is_private:
             await e.client.send_message(
@@ -356,6 +354,8 @@ async def spammer(e):
                 "#DELAYCSPAM\n"
                 + f"Delay Spam was executed successfully in [User](tg://user?id={e.chat_id}) chat with {spamDelay}s Delay and {counter} times with: `{message}`",
             )
+
+
 
 
 CMD_HELP.update(
