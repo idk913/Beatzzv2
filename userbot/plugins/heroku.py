@@ -27,7 +27,7 @@ HEROKU_APP_NAME = Config.HEROKU_APP_NAME
 HEROKU_API_KEY = Config.HEROKU_API_KEY
 
 
-@borg.on(admin_cmd(pattern=r"(set|get|del) var (.*))", outgoing=True))
+@borg.on(admin_cmd(pattern=r"(set|get|del) var (.*)", outgoing=True))
 @borg.on(sudo_cmd(pattern=r"(set|get|del) var (.*)", allow_sudo=True))
 async def variable(var):
     """
