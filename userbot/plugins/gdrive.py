@@ -462,14 +462,18 @@ async def download_gdrive(gdrive, service, uri):
             await copy_dir(service, file_Id, dir_id)
             end = datetime.now()
             ms = (end - start).seconds
-            reply = (f"**Folder successfully copied in** `{ms} seconds`"
-                     f"**Link : **[{file['name']}]({folder['webViewLink']})")
+            reply = (
+                f"**Folder successfully copied in** `{ms} seconds`"
+                f"**Link : **[{file['name']}]({folder['webViewLink']})"
+            )
         else:
             ret_id = await copy_file(service, file_Id, dir_id)
             end = datetime.now()
             ms = (end - start).seconds
-            reply = (f"**File successfully copied in** `{ms} seconds`"
-                     f"**Link : **[link](https://drive.google.com/open?id={ret_id})")
+            reply = (
+                f"**File successfully copied in** `{ms} seconds`"
+                f"**Link : **[link](https://drive.google.com/open?id={ret_id})"
+            )
     except HttpError as e:
         reply = f"**Error : **`{str(e)}`"
     return reply
