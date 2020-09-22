@@ -4,13 +4,15 @@
 
 # imported from uniborg
 
+from justwatch import JustWatch, justwatchapi
+
 from .. import CMD_HELP
 from ..utils import admin_cmd, edit_or_reply, sudo_cmd
 
-from justwatch import JustWatch, justwatchapi
+justwatchapi.__dict__["HEADER"] = {
+    "User-Agent": "JustWatch client (github.com/dawoudt/JustWatchAPI)"
+}
 
-justwatchapi.__dict__['HEADER'] = {
-    'User-Agent': 'JustWatch client (github.com/dawoudt/JustWatchAPI)'}
 
 def get_stream_data(query):
     stream_data = {}
