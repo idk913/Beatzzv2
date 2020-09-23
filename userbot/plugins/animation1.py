@@ -4,7 +4,7 @@ from collections import deque
 from .. import ALIVE_NAME
 from ..utils import admin_cmd, edit_or_reply, sudo_cmd
 
-DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else "cat"
+DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else "Beatzz"
 
 
 @borg.on(admin_cmd(pattern="stupid$"))
@@ -74,14 +74,14 @@ async def _(event):
         "`Connecting To Telegram Headquarters...`",
         "`Call Connected.`",
         "`Telegram: Hello This is Telegram HQ. Who is this?`",
-        f"`Me: Yo this is` {DEFAULTUSER} ,`Please Connect me to my lil bro,Pavel Durov `",
+        f"`Me: Yo this is` {DEFAULTUSER} ,`Please Connect me to my lil bro, Pavel Durov `",
         "`User Authorised.`",
         "`Calling Pavel Durov `  `At +916969696969`",
         "`Private  Call Connected...`",
         "`Me: Hello Sir, Please Ban This Telegram Account.`",
         "`Pavel Durov : May I Know Who Is This?`",
         f"`Me: Yo Brah, I Am` {DEFAULTUSER} ",
-        "`Pavel Durov : OMG!!! Long time no see, Wassup cat...\nI'll Make Sure That Guy Account Will Get Blocked Within 24Hrs.`",
+        "`Pavel Durov : OMG!!! Long time no see, Wassup BEATZZ...\nI'll Make Sure That Guy Account Will Get Blocked Within 24 Hrs.`",
         "`Me: Thanks, See You Later Brah.`",
         "`Pavel Durov : Please Don't Thank Brah, Telegram Is Our's. Just Gimme A Call When You Become Free.`",
         "`Me: Is There Any Issue/Emergency???`",
@@ -102,7 +102,7 @@ async def _(event):
         return
     animation_interval = 0.7
     animation_ttl = range(0, 12)
-    event = await edit_or_reply(event, "ready to die dude.....")
+    event = await edit_or_reply(event, "Get ready to die dude.....")
     animation_chars = [
         "Ｆｉｉｉｉｉｒｅ",
         "(　･ิω･ิ)︻デ═一-->",
