@@ -1,7 +1,7 @@
 {
-  "name": "Catuserbot",
-  "description": "Userbot created by a SNAPDRAGON and custom fork by https://t.me/mrconfused contact @catuserbot_support for support",
-  "logo": "https://telegra.ph/file/3d60313110c58684b31ea.jpg",
+  "name": "B.E.A.T.Z.Z v2",
+  "description": "Clone of Cat Userbot. Contact @Beatzzv2 for support",
+  "logo": "https://telegra.ph/file/711e22e6004fe72b05cd7.png",
   "keywords": [
     "telegram",
     "userbot",
@@ -9,7 +9,7 @@
     "modular",
     "productivity"
   ],
-  "repository": "https://github.com/sandy1709/catuserbot/",
+  "repository": "https://github.com/idk913/Beatzzv2",
   "website": "#TODO",
   "success_url": "#TODO",
   "stack": "container",
@@ -24,7 +24,7 @@
       "required": false
     },
     "ALIVE_NAME": {
-      "description": "give your name",
+      "description": "Type in your alive name, for e.g. @BeatsToHell913",
       "value": ""
     },
     "APP_ID": {
@@ -58,7 +58,7 @@
       "required": false
     },
     "DEFAULT_BIO": {
-      "description": "Your bio here note bio must have only 70characters or less.",
+      "description": "Your bio here, note bio must have only 70 characters or less.",
       "value": "",
       "required": false
     },    
@@ -78,12 +78,12 @@
       "required": false
     },
     "ALIVE_PIC": {
-      "description": "the pic that to show in your alive message url.",
+      "description": "The pic to be shown in your alive message url.",
       "value": "",
       "required": false
     },
     "AUTONAME": {
-      "description": "for .autoname command",
+      "description": "For .autoname command",
       "value": "",
       "required": false
     },
@@ -93,8 +93,8 @@
       "required": false
     },
     "UB_BLACK_LIST_CHAT": {
-      "description": "set blacklist_chats where you do not want userbot features",
-      "value": "-1051754159",
+      "description": "Set blacklist_chats where you do not want userbot features",
+      "value": "",
       "required": false
     },
     "DOWNLOAD_PFP_URL_CLOCK": {
