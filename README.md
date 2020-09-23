@@ -1,18 +1,19 @@
 
-# CAT USERBOT
+# B.E.A.T.Z.Z v2
+Cat Userbot clone with the Alan Walker tone and more features!
 
 ### The Easy Way to deploy the bot
-Get APP ID and API HASH from [HERE](https://my.telegram.org) and BOT TOKEN from [Bot Father](https://t.me/botfather) and then Generate stringsession by clicking on run.on.repl.it button below and then click on deploy to heroku . Before clicking on deploy to heroku just click on fork and star just below
+Get APP ID and API HASH from [HERE](https://my.telegram.org) and BOT TOKEN from [BotFather](https://t.me/botfather) and then Generate string session by clicking on run.on.repl.it button!
 
 [![Get string session](https://repl.it/badge/github/sandy1709/sandeep1709)](https://generatestringsession.sandeep1709.repl.run/)
 
 [![Deploy To Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 <p align="center">
-  <a href="https://github.com/sandy1709/catuserbot/fork">
+  <a href="https://github.com/idk913/Beatzzv2">
     <img src="https://img.shields.io/github/forks/sandy1709/catuserbot?label=Fork&style=social">
     
   </a>
-  <a href="https://github.com/sandy1709/catuserbot">
+  <a href="https://github.com/idk913/Beatzzv2">
     <img src="https://img.shields.io/github/stars/sandy1709/catuserbot?style=social">
   </a>
 </p>
@@ -21,7 +22,8 @@ Get APP ID and API HASH from [HERE](https://my.telegram.org) and BOT TOKEN from 
 [![catuserbot logo](https://telegra.ph/file/7e1e89621fabbf02596f8.jpg)](https://heroku.com/deploy)
 
 
-### Join [here](https://t.me/catuserbot17) for updates and tuts and [here](https://t.me/catuserbot_support) for discussion and bugs
+### Userbot by [this legend](https://t.me/BeatsToHell913) 
+### Join [this group](https://t.me/Beatzzv2) for queries and staying up to date!
 
 ### The Normal Way
 
