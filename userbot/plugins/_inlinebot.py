@@ -21,12 +21,12 @@ if Var.TG_BOT_USER_NAME_BF_HER is not None and tgbot is not None:
             buttons = [
                 (
                     custom.Button.inline("Stats", data="stats"),
-                    Button.url("Repo", "https://github.com/sandy1709/catuserbot"),
+                    Button.url("Repo", "https://github.com/idk913/Beatzzv2"),
                 )
             ]
             result = builder.article(
                 # catpic,
-                title="Alive cat",
+                title="Alive B.E.A.T.Z.Z",
                 # force_document = False,
                 text=query,
                 buttons=buttons,
@@ -36,7 +36,7 @@ if Var.TG_BOT_USER_NAME_BF_HER is not None and tgbot is not None:
             rev_text = query[::-1]
             buttons = paginate_help(0, CMD_LIST, "helpme")
             result = builder.article(
-                "© Userbot Help",
+                "© B.E.A.T.Z.Z v2 Userbot Help",
                 text="{}\nCurrently Loaded Plugins: {}".format(query, len(CMD_LIST)),
                 buttons=buttons,
                 link_preview=False,
@@ -91,7 +91,7 @@ if Var.TG_BOT_USER_NAME_BF_HER is not None and tgbot is not None:
             # https://t.me/TelethonChat/115200
             await event.edit(buttons=buttons)
         else:
-            reply_pop_up_alert = "Please get your own catuserbot, and don't use mine! Join @catuserbot17 help"
+            reply_pop_up_alert = "Please get your own BEATZZ Userbot, and don't use mine! Join @Beatzzv2 and don't disturb my creator, @BeatsToHell913"
             await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
 
     @tgbot.on(
@@ -108,7 +108,7 @@ if Var.TG_BOT_USER_NAME_BF_HER is not None and tgbot is not None:
             # https://t.me/TelethonChat/115200
             await event.edit(buttons=buttons)
         else:
-            reply_pop_up_alert = "Please get your own catuserbot, and don't use mine! Join @catuserbot17 help "
+            reply_pop_up_alert = "Please get your own BEATZZ Userbot, and don't use mine! Join @Beatzzv2 and don't disturb my creator, @BeatsToHell913"
             await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
 
     @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"secret_(.+?)_(.+)")))
@@ -123,7 +123,7 @@ if Var.TG_BOT_USER_NAME_BF_HER is not None and tgbot is not None:
             await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
         else:
             reply_pop_up_alert = (
-                "why were you looking at this shit go away and do your own work,idiot"
+                "Why were you looking at this shit go away and do your own work, idiot!"
             )
             await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
 
@@ -147,7 +147,7 @@ if Var.TG_BOT_USER_NAME_BF_HER is not None and tgbot is not None:
             else:
                 reply_pop_up_alert = help_string
             reply_pop_up_alert += (
-                "Use .unload {} to remove this plugin ©catuserbot".format(plugin_name)
+                "Use .unload {} to remove this plugin".format(plugin_name)
             )
             try:
                 await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
@@ -163,7 +163,7 @@ if Var.TG_BOT_USER_NAME_BF_HER is not None and tgbot is not None:
                         caption=plugin_name,
                     )
         else:
-            reply_pop_up_alert = "Please get your own catuserbot, and don't use mine! Join @catuserbot17 help "
+            reply_pop_up_alert = "Please get your own BEATZZ Userbot, and don't use mine! Join @Beatzzv2 and don't disturb my creator, @BeatsToHell913"
             await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
 
     @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"close")))
@@ -171,7 +171,7 @@ if Var.TG_BOT_USER_NAME_BF_HER is not None and tgbot is not None:
         if event.query.user_id == bot.uid:
             await event.edit("menu closed")
         else:
-            reply_pop_up_alert = "Please get your own catuserbot, and don't use mine! Join @catuserbot17 help "
+            reply_pop_up_alert = "Please get your own BEATZZ Userbot, and don't use mine! Join @Beatzzv2 and don't disturb my creator, @BeatsToHell913"
             await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
 
     @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"stats")))
