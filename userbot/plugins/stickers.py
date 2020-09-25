@@ -1,7 +1,7 @@
 # Copyright (C) 2019 The Raphielscape Company LLC.
 # Licensed under the Raphielscape Public License, Version 1.c (the "License");
 # you may not use this file except in compliance with the License.
-""" Userbot module for kanging stickers or making new ones. Thanks @rupansh"""
+""" Userbot module for kanging stickers or making new ones. Thanks @rupansh and @BeatsToHell913"""
 
 import io
 import math
@@ -24,6 +24,7 @@ from userbot.utils import admin_cmd
 
 KANGING_STR = [
     "Using Witchery to kang this sticker...",
+    "Hey, look dat way, it's a girl!",
     "Plagiarising hehe...",
     "Inviting this sticker over to my pack...",
     "Kanging this sticker...",
@@ -32,7 +33,8 @@ KANGING_STR = [
     "Ay look over there (☉｡☉)!→\nWhile I kang this...",
     "Roses are red violets are blue, kanging this sticker so my pacc looks cool",
     "Imprisoning this sticker...",
-    "Mr.Steal Your Sticker is stealing this sticker... ",
+    "Mr. B.E.A.T.Z.Z is stealing this sticker... ",
+    "This sticker deserves to be in my pack, kanging it over hehe...",
 ]
 
 
@@ -61,7 +63,7 @@ async def kang(args):
             photo = io.BytesIO()
             await bot.download_file(message.media.document, photo)
             if (
-                DocumentAttributeFilename(file_name="sticker.webp")
+                DocumentAttributeFilename(file_name="BEATZZsticker.webp")
                 in message.media.document.attributes
             ):
                 emoji = message.media.document.attributes[1].alt
@@ -108,7 +110,7 @@ async def kang(args):
             else:
                 pack = splat[1]
         packname = f"{user.username}_{pack}"
-        packnick = f"@{user.username}'s_{pack}"
+        packnick = f"@{user.username}'s B.E.A.T.Z.Z {pack}"
         cmd = "/newpack"
         file = io.BytesIO()
         if not is_anim:
@@ -281,7 +283,7 @@ async def kang(args):
                 # Ensure user doesn't get spamming notifications
                 await bot.send_read_acknowledge(conv.chat_id)
         await args.edit(
-            f"Sticker kanged successfully!\
+            f"Sticker kanged successfully by B.E.A.T.Z.Z!\
             \nPack can be found [here](t.me/addstickers/{packname}) and emoji of the sticker is {emoji}",
             parse_mode="md",
         )
