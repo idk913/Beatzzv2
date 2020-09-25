@@ -80,7 +80,7 @@ async def carbon_api(e):
     await e.client.send_file(
         e.chat_id,
         file,
-        caption="Here's your carbon, \n Carbonised by cat",
+        caption="Here's your carbon, \n Carbonised by **B.E.A.T.Z.Z**",
         force_document=True,
         reply_to=e.message.reply_to_msg_id,
     )
@@ -140,7 +140,7 @@ async def carbon_api(e):
     await e.client.send_file(
         e.chat_id,
         file,
-        caption=f"Here's your Karbon1 ",
+        caption=f"Here's your Karbon1, by **B.E.A.T.Z.Z**",
         force_document=True,
         reply_to=e.message.reply_to_msg_id,
     )
@@ -197,7 +197,7 @@ async def carbon_api(e):
     await e.client.send_file(
         e.chat_id,
         file,
-        caption=f"Here's your Karbon2",
+        caption=f"Here's your Karbon2, carbonized by **B.E.A.T.Z.Z**",
         force_document=True,
         reply_to=e.message.reply_to_msg_id,
     )
