@@ -1,15 +1,8 @@
 """
-Time In Profile Pic.....
+Time In Profile Pic.....OK?
 Command: `.bloom`
-Hmmmm U need to config DOWNLOAD_PFP_URL_CLOCK var in Heroku with any telegraph image link
-:::::Credit Time::::::
-1) Coded By: @s_n_a_p_s
-2) Ported By: @r4v4n4 (Noodz Lober)
-3) End Game Help By: @spechide
-4) Better Colour Profile Pic By @PhycoNinja13b
-#curse: who ever edits this credit section will goto hell
-⚠️DISCLAIMER⚠️
-USING THIS PLUGIN CAN RESULT IN ACCOUNT BAN. WE DONT CARE ABOUT BAN, SO WE ARR USING THIS.
+You need to config DOWNLOAD_PFP_URL_CLOCK var in Heroku with any telegraph image link
+
 """
 import asyncio
 import os
@@ -29,7 +22,7 @@ from userbot.utils import admin_cmd
 
 DEFAULTUSERBIO = str(DEFAULT_BIO) if DEFAULT_BIO else " ᗯᗩᏆᎢᏆᑎᏀ ᏞᏆᏦᗴ ᎢᏆᗰᗴ  "
 DEL_TIME_OUT = 60
-DEFAULTUSER = str(AUTONAME) if AUTONAME else "cat"
+DEFAULTUSER = str(AUTONAME) if AUTONAME else "Beatzz"
 
 FONT_FILE_TO_USE = "/usr/share/fonts/truetype/liberation/LiberationMono-Regular.ttf"
 
@@ -49,8 +42,7 @@ async def autopic(event):
     while True:
         shutil.copy(downloaded_file_name, photo)
         im = Image.open(photo)
-        file_test = im.rotate(counter, expand=False).save(photo, "PNG")
-        current_time = datetime.now().strftime("  Time: %H:%M \n  Date: %d.%m.%y ")
+        current_time = datetime.now().strftime("  Time: %H:%M \n  Date: %d/%m/%y ")
         img = Image.open(photo)
         drawn_text = ImageDraw.Draw(img)
         fnt = ImageFont.truetype(FONT_FILE_TO_USE, 30)
@@ -70,7 +62,7 @@ async def autopic(event):
 
 @borg.on(admin_cmd(pattern="digitalpfp$"))
 async def main(event):
-    await event.edit("Starting digital Profile Pic see magic in 5 sec.")
+    await event.edit("Starting digital Profile Pic, see magic in 5 sec.")
     poto = "userbot/poto_pfp.png"
     cat = str(
         pybase64.b64decode(
@@ -292,7 +284,7 @@ CMD_HELP.update(
     {
         "autoprofile": "**autoprofile**\
     \n**Syntax : **`.autopic`\
-\n**Usage : **Rotating image along with the time on it .\
+\n**Usage : **Your dp of choice with time printed in it .\
 \nfor working this you must set `DOWNLOAD_PFP_URL_CLOCK` in the heroku vars first with telegraph link of required image\
 \n\n**Syntax : **`.digitalpfp`\
 \n**Usage : **Your profile pic changes to digitaltime profile picutre \
