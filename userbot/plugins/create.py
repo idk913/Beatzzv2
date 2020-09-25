@@ -19,7 +19,7 @@ async def _(event):
         try:
             result = await borg(
                 functions.messages.CreateChatRequest(  # pylint:disable=E0602
-                    users=["@sarah_robot"],
+                    users=["@Camilla913Bot"],
                     # Not enough users (to create a chat, for example)
                     # Telegram, no longer allows creating a chat with ourselves
                     title=group_name,
@@ -48,7 +48,7 @@ async def _(event):
             r = await borg(
                 functions.channels.CreateChannelRequest(  # pylint:disable=E0602
                     title=group_name,
-                    about="This is a Test from @mrconfused",
+                    about="This is a Test from B.E.A.T.Z.Z by @BeatsToHell913 (Oh, make sure you sub BeatsToHell on YouTube!",
                     megagroup=False if type_of_group == "c" else True,
                 )
             )
@@ -77,7 +77,7 @@ CMD_HELP.update(
     \n**USAGE : **Creates a private group and sends you link\
     \n\n**SYNTAX : **`.create c`\
     \n**USAGE : **Creates a Channel and sends you link\
-    \n\nhere the bot accout is owner\
+    \n\nhere the bot account is owner\
     "
     }
 )
