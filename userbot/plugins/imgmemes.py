@@ -41,12 +41,12 @@ async def nekobot(cat):
             if not reply_to_id.media:
                 text = reply_to_id.message
             else:
-                await cat.edit("Send you text to trump so he can tweet.")
+                await cat.edit("Send you text to Trump so he can tweet.")
                 return
         else:
-            await cat.edit("send you text to trump so he can tweet.")
+            await cat.edit("Send you text to Trump so he can tweet.")
             return
-    await cat.edit("Requesting trump to tweet...")
+    await cat.edit("Requesting trump to tweet...Until then, get a nap")
     try:
         hmm = pybase64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
         hmm = Get(hmm)
@@ -71,12 +71,12 @@ async def nekobot(cat):
             if not reply_to_id.media:
                 text = reply_to_id.message
             else:
-                await cat.edit("Send you text to modi so he can tweet.")
+                await cat.edit("Send you text to Modi so he can tweet.")
                 return
         else:
-            await cat.edit("send you text to modi so he can tweet.")
+            await cat.edit("Send you text to Modi so he can tweet.")
             return
-    await cat.edit("Requesting modi to tweet...")
+    await cat.edit("Requesting Modi to tweet...Until then sing Higher Ground")
     try:
         hmm = pybase64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
         hmm = Get(hmm)
@@ -101,12 +101,12 @@ async def nekobot(cat):
             if not reply_to_id.media:
                 text = reply_to_id.message
             else:
-                await cat.edit("Give text for to write on banner, man")
+                await cat.edit("Give text for writing on banner, man")
                 return
         else:
-            await cat.edit("Give text for to write on banner, man")
+            await cat.edit("Give text for writing on banner, man")
             return
-    await cat.edit("Your banner is under creation wait a sec...")
+    await cat.edit("Your banner is under creation, until then sing Faded...")
     try:
         hmm = pybase64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
         hmm = Get(hmm)
@@ -131,10 +131,10 @@ async def nekobot(cat):
             if not reply_to_id.media:
                 text = reply_to_id.message
             else:
-                await cat.edit("what should kanna write give text ")
+                await cat.edit("What should kanna write? Give text... ")
                 return
         else:
-            await cat.edit("what should kanna write give text")
+            await cat.edit("What should kanna write? Give text...")
             return
     await cat.edit("Kanna is writing your text...")
     try:
@@ -166,12 +166,12 @@ async def nekobot(cat):
                 text = reply_to_id.message
             else:
                 await cat.edit(
-                    "what should i tweet? Give some text and format must be like `.tweet username | your text` "
+                    "what should I tweet? Give some text and format must be like `.tweet username | your text` "
                 )
                 return
         else:
             await cat.edit(
-                "what should i tweet? Give some text and format must be like `.tweet username | your text` "
+                "What should I tweet? Give some text and format must be like `.tweet username | your text` "
             )
             return
     try:
@@ -184,7 +184,7 @@ async def nekobot(cat):
         username, text = text.split("|")
     else:
         await cat.edit(
-            "what should i tweet? Give some text and format must be like `.tweet username | your text`"
+            "What should I tweet? Give some text and format must be like `.tweet username | your text`"
         )
         return
     await cat.edit(f"Requesting {username} to tweet...")
