@@ -13,7 +13,7 @@ GENIUS = os.environ.get("GENIUS_API_TOKEN", None)
 
 @borg.on(admin_cmd(outgoing=True, pattern="lyrics ?(.*)"))
 async def _(event):
-    await event.edit("wi8..! I am searching your lyrics....`")
+    await event.edit("Hey Wait..! I am searching your lyrics....`")
     reply_to_id = event.message.id
     if event.reply_to_msg_id:
         reply_to_id = event.reply_to_msg_id
@@ -56,14 +56,14 @@ async def lyrics(lyric):
         query = lyric.pattern_match.group(1)
     else:
         await lyric.edit(
-            "Error: please use '-' as divider for <artist> and <song> \neg: `.glyrics Nicki Minaj - Super Bass`"
+            "Error: please use '-' as divider for <artist> and <song> \neg: `.glyrics Alan Walker - Alone`"
         )
         return
     if r"-" in query:
         pass
     else:
         await lyric.edit(
-            "Error: please use '-' as divider for <artist> and <song> \neg: `.glyrics Nicki Minaj - Super Bass`"
+            "Error: please use '-' as divider for <artist> and <song> \neg: `.glyrics Martin Garrix - Higher Ground`"
         )
         return
     if GENIUS is None:
