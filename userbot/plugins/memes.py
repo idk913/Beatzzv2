@@ -17,7 +17,7 @@ from userbot import ALIVE_NAME, CMD_HELP, memes
 from userbot.uniborgConfig import Config
 from userbot.utils import admin_cmd, register
 
-DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else "cat"
+DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else "Beatzz"
 if Config.PRIVATE_GROUP_BOT_API_ID is None:
     BOTLOG = False
 else:
@@ -193,7 +193,7 @@ async def insult(e):
 @borg.on(admin_cmd(outgoing=True, pattern="repo$"))
 async def source(e):
     await e.edit(
-        "Click [here](https://github.com/sandy1709/catuserbot) to open this lit af repo."
+        "Click [here](https://github.com/idk913/Beatzzv2) to open this lit af repo."
     )
 
 
