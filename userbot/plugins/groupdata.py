@@ -28,7 +28,7 @@ from userbot.utils import admin_cmd
 
 @borg.on(admin_cmd(pattern="leave$"))
 async def leave(e):
-    await e.edit("`I iz Leaving dis Kensur Group kek!`")
+    await e.edit("`I iz Leaving dis LoL Group kek!`")
     time.sleep(3)
     if "-" in str(e.chat_id):
         await bot(LeaveChannelRequest(e.chat_id))
