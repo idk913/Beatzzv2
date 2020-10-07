@@ -6,7 +6,7 @@ from userbot import ALIVE_NAME
 from .. import CMD_HELP, CMD_LIST, SUDO_LIST
 from ..utils import admin_cmd, edit_or_reply, sudo_cmd
 
-DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else "cat"
+DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else "Beatzz"
 
 
 @borg.on(admin_cmd(pattern="help ?(.*)"))
@@ -35,7 +35,7 @@ async def cmd_list(event):
                 .get("key")
             )
             url = f"https://nekobin.com/{key}"
-            reply_text = f"All commands of the catuserbot are [here]({url})"
+            reply_text = f"All commands of B.E.A.T.Z.Z v2 are [here]({url})"
             await event.edit(reply_text)
             return
         await event.edit(string)
