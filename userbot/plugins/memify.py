@@ -41,7 +41,7 @@ async def memes(cat):
             bottom = ""
     else:
         await edit_or_reply(
-            cat, "```what should i write on that u idiot give some text```"
+            cat, "```What should I write on that, u idiot give some text```"
         )
         return
     if not os.path.isdir("./temp/"):
@@ -59,7 +59,7 @@ async def memes(cat):
 
     if catsticker.endswith(".tgs"):
         await cat.edit(
-            "```Transfiguration Time! Mwahaha memifying this animated sticker! (」ﾟﾛﾟ)｣```"
+            "```Transfiguration Time! Mwahaha B.E.A.T.Z.Z is memifying this animated sticker! (」ﾟﾛﾟ)｣```"
         )
         catfile = os.path.join("./temp/", "meme.png")
         catcmd = (
@@ -72,7 +72,7 @@ async def memes(cat):
         meme_file = catfile
     elif catsticker.endswith(".webp"):
         await cat.edit(
-            "```Transfiguration Time! Mwahaha memifying this sticker! (」ﾟﾛﾟ)｣```"
+            "```Transfiguration Time! Mwahaha B.E.A.T.Z.Z is memifying this sticker! (」ﾟﾛﾟ)｣```"
         )
         catfile = os.path.join("./temp/", "memes.jpg")
         os.rename(catsticker, catfile)
@@ -82,7 +82,7 @@ async def memes(cat):
         meme_file = catfile
     elif catsticker.endswith((".mp4", ".mov")):
         await cat.edit(
-            "```Transfiguration Time! Mwahaha memifying this video! (」ﾟﾛﾟ)｣```"
+            "```Transfiguration Time! Mwahaha let B.E.A.T.Z.Z memify this video! (」ﾟﾛﾟ)｣```"
         )
         catfile = os.path.join("./temp/", "memes.jpg")
         await take_screen_shot(catsticker, 0, catfile)
@@ -92,7 +92,7 @@ async def memes(cat):
         meme_file = catfile
     else:
         await cat.edit(
-            "```Transfiguration Time! Mwahaha memifying this image! (」ﾟﾛﾟ)｣```"
+            "```Transfiguration Time! Mwahaha B.E.A.T.Z.Z is memifying this image! (」ﾟﾛﾟ)｣```"
         )
         meme_file = catsticker
     try:
