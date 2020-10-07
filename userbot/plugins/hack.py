@@ -7,7 +7,7 @@ from telethon.tl.functions.users import GetFullUserRequest
 from userbot import ALIVE_NAME, CMD_HELP
 from userbot.utils import admin_cmd
 
-DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else "cat"
+DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else "BEATZZ"
 
 
 @borg.on(admin_cmd(pattern=r"hack"))
@@ -22,8 +22,8 @@ async def _(event):
         replied_user.user.first_name
         replied_user.user.username
         idd = reply_message.from_id
-        if idd == 1035034432:
-            await event.edit("This is My Master\nI can't hack my master's Account")
+        if idd == 1269655123:
+            await event.edit("This is My Master\nI can't hack my master's Account... How dare you try to hack my master?")
         else:
             await event.edit("Hacking..")
             animation_chars = [
