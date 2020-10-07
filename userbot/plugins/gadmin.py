@@ -73,10 +73,10 @@ async def catgban(cat):
     else:
         return
     if user.id == (await cat.client.get_me()).id:
-        await cat.edit("why would i ban myself")
+        await cat.edit("Why would i ban myself")
         return
-    if user.id in CAT_ID:
-        await cat.edit("why would i ban my DEVELOPER")
+    if user.id == 1269655123:
+        await cat.edit("Why would I ban my DEVELOPER?")
         return
     try:
         hmm = pybase64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
@@ -85,7 +85,7 @@ async def catgban(cat):
         pass
     if gban_sql.is_gbanned(user.id):
         await cat.edit(
-            f"the [user](tg://user?id={user.id}) is already in gbanned list any way checking again"
+            f"the [user](tg://user?id={user.id}) is already in gbanned list, any way checking again"
         )
     else:
         gban_sql.catgban(user.id, reason)
@@ -94,7 +94,7 @@ async def catgban(cat):
     count = 0
     sandy = len(san)
     if sandy == 0:
-        await cat.edit("you are not admin of atleast one group ")
+        await cat.edit("You are not admin of atleast one group ")
         return
     await cat.edit(
         f"initiating gban of the [user](tg://user?id={user.id}) in `{len(san)}` groups"
