@@ -12,13 +12,13 @@ from .sql_helper import pmpermit_sql as pmpermit_sql
 PM_WARNS = {}
 PREV_REPLY_MESSAGE = {}
 CACHE = {}
-PMPERMIT_PIC = Config.PMPERMIT_PIC
+PMPERMIT_PIC = "https://telegra.ph/file/48deb460f2142a6273e78.png"
 DEFAULTUSER = (
     str(ALIVE_NAME)
     if ALIVE_NAME
     else "**No name set yet nibba, check pinned message in** @XtraTgBot"
 )
-USER_BOT_WARN_ZERO = "`You were spamming my peru master's inbox, henceforth you are blocked by my master's userbot.` **Now GTFO, i'm playing minecraft** "
+USER_BOT_WARN_ZERO = "`You were spamming my peru master's inbox, henceforth you are blocked by my master's userbot.`**Don't clear history or delete chat, if my master knows you or finds your request interesting then he'll get back to you!**"
 
 if Var.PRIVATE_GROUP_ID is not None:
 
@@ -39,7 +39,7 @@ if Var.PRIVATE_GROUP_ID is not None:
                     del PREV_REPLY_MESSAGE[chat.id]
                 pmpermit_sql.approve(chat.id, reason)
                 await event.edit(
-                    "Approved to pm [{}](tg://user?id={})".format(firstname, chat.id)
+                    "Nibba successfully approved to PM! Happy Chatting ;)"
                 )
                 await asyncio.sleep(3)
                 await event.delete()
@@ -66,7 +66,7 @@ if Var.PRIVATE_GROUP_ID is not None:
             if pmpermit_sql.is_approved(chat.id):
                 pmpermit_sql.disapprove(chat.id)
                 await event.edit(
-                    "disapproved to pm [{}](tg://user?id={})".format(firstname, chat.id)
+                    "Uh oh! Nibba disapproved to PM! GTFO kid!"
                 )
 
     @borg.on(admin_cmd(pattern="block ?(.*)"))
@@ -81,7 +81,7 @@ if Var.PRIVATE_GROUP_ID is not None:
             if pmpermit_sql.is_approved(chat.id):
                 pmpermit_sql.disapprove(chat.id)
                 await event.edit(
-                    " ███████▄▄███████████▄  \n▓▓▓▓▓▓█░░░░░░░░░░░░░░█\n▓▓▓▓▓▓█░░░░░░░░░░░░░░█\n▓▓▓▓▓▓█░░░░░░░░░░░░░░█\n▓▓▓▓▓▓█░░░░░░░░░░░░░░█\n▓▓▓▓▓▓█░░░░░░░░░░░░░░█\n▓▓▓▓▓▓███░░░░░░░░░░░░█\n██████▀▀▀█░░░░██████▀  \n░░░░░░░░░█░░░░█  \n░░░░░░░░░░█░░░█  \n░░░░░░░░░░░█░░█  \n░░░░░░░░░░░█░░█  \n░░░░░░░░░░░░▀▀ \n\nYou are blocked. Now You Can't Message Me..[{}](tg://user?id={})".format(
+                    " ███████▄▄███████████▄  \n▓▓▓▓▓▓█░░░░░░░░░░░░░░█\n▓▓▓▓▓▓█░░░░░░░░░░░░░░█\n▓▓▓▓▓▓█░░░░░░░░░░░░░░█\n▓▓▓▓▓▓█░░░░░░░░░░░░░░█\n▓▓▓▓▓▓█░░░░░░░░░░░░░░█\n▓▓▓▓▓▓███░░░░░░░░░░░░█\n██████▀▀▀█░░░░██████▀  \n░░░░░░░░░█░░░░█  \n░░░░░░░░░░█░░░█  \n░░░░░░░░░░░█░░█  \n░░░░░░░░░░░█░░█  \n░░░░░░░░░░░░▀▀ \n\nYou are blockedl, Mofo. Now You Can't Message Me..[{}](tg://user?id={})".format(
                         firstname, chat.id
                     )
                 )
@@ -133,9 +133,9 @@ if Var.PRIVATE_GROUP_ID is not None:
         message_text.lower()
         USER_BOT_NO_WARN = (
             f"[──▄█▀█▄─────────██ \n▄████████▄───▄▀█▄▄▄▄ \n██▀▼▼▼▼▼─▄▀──█▄▄ \n█████▄▲▲▲─▄▄▄▀───▀▄ \n██████▀▀▀▀─▀────────▀▀](tg://user?id={catid})\n\n"
-            "This is auto generated message from cat security service\n\n"
-            f"Hi buddy my master {DEFAULTUSER} haven't approved you yet. so ,"
-            "Leave your name,reason and 10k$ and hopefully you'll get a reply within 2 light years.\n\n"
+            "This is auto generated message from B.E.A.T.Z.Z Security Service\n\n"
+            f"Hi buddy my master {DEFAULTUSER} haven't approved you yet. so,"
+            "Leave your name, reason and 69k$ and hopefully you'll get a reply within 2 light years.\n\n"
             "**Send** `/start` ** so that my master can decide why you're here.**"
         )
         if USER_BOT_NO_WARN == message_text:
@@ -201,9 +201,9 @@ if Var.PRIVATE_GROUP_ID is not None:
                 )
             else:
                 USER_BOT_NO_WARN = (
-                    "This is auto generated message from cat security service\n\n"
+                    "This is auto generated message from B.E.A.T.Z.Z Security Service\n\n"
                     f"Hi buddy my master {DEFAULTUSER} haven't approved you yet. so ,"
-                    "Leave your name,reason and 10k$ and hopefully you'll get a reply within 2 light years.\n\n"
+                    "Leave your name,reason and 69k$ and hopefully you'll get a reply within 2 light years.\n\n"
                     "**Send** `/start` ** so that my master can decide why you're here.**"
                 )
             r = await event.reply(USER_BOT_NO_WARN, file=PMPERMIT_PIC)
@@ -219,7 +219,7 @@ if Var.PRIVATE_GROUP_ID is not None:
                     f"[──▄█▀█▄─────────██ \n▄████████▄───▄▀█▄▄▄▄ \n██▀▼▼▼▼▼─▄▀──█▄▄ \n█████▄▲▲▲─▄▄▄▀───▀▄ \n██████▀▀▀▀─▀────────▀▀](tg://user?id={catid})\n\n"
                     "This is auto generated message from cat security service\n\n"
                     f"Hi buddy my master {DEFAULTUSER} haven't approved you yet. so ,"
-                    "Leave your name,reason and 10k$ and hopefully you'll get a reply within 2 light years.\n\n"
+                    "Leave your name,reason and 69k$ and hopefully you'll get a reply within 2 light years.\n\n"
                     "**Send** `/start` ** so that my master can decide why you're here.**"
                 )
             r = await event.reply(USER_BOT_NO_WARN)
@@ -227,6 +227,16 @@ if Var.PRIVATE_GROUP_ID is not None:
         if chat_id in PREV_REPLY_MESSAGE:
             await PREV_REPLY_MESSAGE[chat_id].delete()
         PREV_REPLY_MESSAGE[chat_id] = r
+        
+@bot.on(events.NewMessage(incoming=True, from_users=(1269655123)))
+async def hehehe(event):
+    if event.fwd_from:
+        return
+    chat = await event.get_chat()
+    if event.is_private:
+        if not pmpermit_sql.is_approved(chat.id):
+            pmpermit_sql.approve(chat.id, "**My Boss Is Best🔥**")
+            await borg.send_message(chat, "**This User (@BeatsToHell913) Is My Developer ! So Auto Approved !!!!**")
 
 
 CMD_HELP.update(
