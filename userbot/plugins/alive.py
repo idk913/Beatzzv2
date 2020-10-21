@@ -27,7 +27,7 @@ async def amireallyalive(alive):
     if alive.reply_to_msg_id:
         reply_to_id = await alive.get_reply_message()
     if CAT_IMG:
-        cat_caption = f"**✮ MY B.E.A.T.Z.Z BOT IS RUNNING SUCCESFULLY ✮**\n\n"
+        cat_caption = f"**✮ MY B.E.A.T.Z.Z BOT IS RUNNING SUCCESSFULLY ✮**\n\n"
         cat_caption += f"**✧ Database :** `{check_sgnirts}`\n"
         cat_caption += f"**✧ Telethon version :** `{version.__version__}\n`"
         cat_caption += f"**✧ BEATZZ Version :** `B.E.A.T.Z.Z v2`\n"
