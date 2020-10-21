@@ -20,7 +20,7 @@ from . import runcmd
 HEROKU_APP_NAME = Var.HEROKU_APP_NAME
 HEROKU_API_KEY = Var.HEROKU_API_KEY
 UPSTREAM_REPO_BRANCH = "master"
-UPSTREAM_REPO_URL = "https://github.com/sandy1709/catuserbot"
+UPSTREAM_REPO_URL = "https://github.com/idk913/Beatzzv2"
 
 requirements_path = path.join(
     path.dirname(path.dirname(path.dirname(__file__))), "requirements.txt"
@@ -225,11 +225,11 @@ async def upstream(event):
     return
 
 
-@bot.on(admin_cmd(outgoing=True, pattern=r"badcat$"))
+@bot.on(admin_cmd(outgoing=True, pattern=r"v1$"))
 @borg.on(sudo_cmd(pattern="badcat$", allow_sudo=True))
 async def upstream(event):
-    event = await edit_or_reply(event, "`Pulling the bad cat repo wait a sec ....`")
-    off_repo = "https://github.com/Jisan09/catuserbot"
+    event = await edit_or_reply(event, "`Pulling the B.E.A.T.Z.Z v1 repo, wait a sec ....`")
+    off_repo = "https://github.com/idk913/BeatzzUserbot"
     catcmd = f"rm -rf .git"
     try:
         await runcmd(catcmd)
@@ -275,7 +275,7 @@ CMD_HELP.update(
         "\n\n**Syntax : **`.update deploy`"
         "\n**Usage :** Deploy your userbot.So even you restart it doesnt go back to previous version"
         "\nThis will triggered deploy always, even no updates."
-        "\n\n**Syntax : **`.badcat`"
-        "\n**Usage :** Shifts from official cat repo to jisan's repo(for gali commands)"
+        "\n\n**Syntax : **`.v1`"
+        "\n**Usage :** Shifts from B.E.A.T.Z.Z v2 repo to B.E.A.T.Z.Z v1 repo(not recommended)"
     }
 )
