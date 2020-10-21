@@ -31,7 +31,7 @@ async def _(event):
     )
     stdout, stderr = await process.communicate()
     o = stdout.decode()
-    OUTPUT = f"**[Cat's](tg://need_update_for_some_feature/) CPU Model:**\n{o}"
+    OUTPUT = f"**B.E.A.T.Z.Z CPU Model:**\n{o}"
     if len(OUTPUT) > Config.MAX_MESSAGE_SIZE_LIMIT:
         with io.BytesIO(str.encode(OUTPUT)) as out_file:
             out_file.name = "env.text"
@@ -100,7 +100,7 @@ async def sysdetails(sysd):
 
         await sysd.edit("Neofetch Result: `" + result + "`")
     except FileNotFoundError:
-        await sysd.edit("`Hello, on catuserbot  install .neofetch first kthx`")
+        await sysd.edit("`Hello, on B.E.A.T.Z.Z  install .neofetch first kthx`")
 
 
 # uptime idea and credits was from @Sur_vivor
@@ -109,7 +109,7 @@ async def sysdetails(sysd):
 @borg.on(admin_cmd(pattern="uptime$"))
 async def _(event):
     uptime = await catdef.get_readable_time((time.time() - StartTime))
-    OUTPUT = f"**[Cat's](tg://need_update_for_some_feature/) CPU UPTIME:**\n{uptime}"
+    OUTPUT = f"**B.E.A.T.Z.Z CPU UPTIME:**\n{uptime}"
     await event.edit(OUTPUT)
 
 
