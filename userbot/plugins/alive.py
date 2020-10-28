@@ -42,7 +42,7 @@ async def amireallyalive(alive):
     else:
         await edit_or_reply(
             alive,
-            f"**✮ MY BOT IS RUNNING SUCCESFULLY ✮**\n\n"
+            f"**✮ MY B.E.A.T.Z.Z BOT IS RUNNING SUCCESSFULLY ✮**\n\n"
             f"**✧ Database :** `{check_sgnirts}`\n"
             f"**✧ Telethon Version :** `{version.__version__}\n`"
             f"**✧ BEATZZ Version :** `B.E.A.T.Z.Z v2`\n"
