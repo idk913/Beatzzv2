@@ -1,7 +1,7 @@
-FROM idk913/Beatzzv2:latest
+FROM idk913/beatzzv2:latest
 
 #clonning repo 
-RUN git clone https://github.com/idk913/Beatzzv2.git /root/userbot
+RUN git clone https://github.com/idk913/beatzzv2.git /root/userbot
 #working directory 
 WORKDIR /root/userbot
 
