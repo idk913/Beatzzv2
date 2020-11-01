@@ -1,4 +1,4 @@
-FROM idk913/beatzzv2:latest
+FROM sandy1709/catuserbot:latest
 
 #clonning repo 
 RUN git clone https://github.com/idk913/beatzzv2.git /root/userbot
